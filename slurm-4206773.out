@@ -1,0 +1,5 @@
+Testing on task_chunks/2010/task_chunk_00000.csv
+Processing chunk row 1/70: 10121, 2010, m
+[INFO] Log file created: /zfsstore/user/lik6/cml_unit_value/logs/hs_10121_2010_m_20250621_200433.log
+Starting analysis for HS code 10121 in year 2010...
+

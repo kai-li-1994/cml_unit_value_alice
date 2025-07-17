@@ -1,0 +1,12 @@
+[2025-06-21 21:15:51] INFO     Clean trade data (HS 020210, 2010, X)
+[2025-06-21 21:15:51] INFO     📄 Found file: /zfsstore/user/lik6/cml_unit_value/data_uncomtrade/split_by_hs_2010_numpy/H4_020210_2010.csv
+[2025-06-21 21:15:51] INFO     🧹 Cleaning Summary:
+[2025-06-21 21:15:51] INFO      - Initial rows: 934
+[2025-06-21 21:15:51] INFO      - Valid country filter: 827 (88.54%)
+[2025-06-21 21:15:51] INFO      - Valid trade value filter: 145 (15.52%)
+[2025-06-21 21:15:51] INFO      - Valid kg-based UV rows: 119 (12.74%)
+[2025-06-21 21:15:51] WARNING  ⚠️ Only 119 kg-based UV records (<200)
+[2025-06-21 21:15:51] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-06-21 21:15:51] INFO     ✅ Finished cleaning: HS 020210, Year 2010, Flow X
+[2025-06-21 21:15:51] WARNING  ❌ Skipping both kg-based and non-kg-based analysis due to insufficient sample size.
+[2025-06-21 21:15:51] INFO     ✅ Saved final report to /zfsstore/user/lik6/cml_unit_value/reports/report_020210_2010_x.parquet

@@ -1,0 +1,6 @@
+[INFO] Log file created: /zfsstore/user/lik6/cml_unit_value/logs/hs_370110_2023_m_20250620_144933.log
+Starting analysis for HS code 370110 in year 2023...
+
+Running modality test on unit values...
+📈 GMM selection: BIC-best=5, L-adjust=4, Tick-adjust=None, Selected=4
+📈 GMM selection: BIC-best=6, L-adjust=5, Tick-adjust=None, Selected=5

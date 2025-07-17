@@ -1,0 +1,25 @@
+name: cml_uv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - tqdm
+  - requests
+  - colorlog
+  - psutil
+  - spyder=6.0.7
+  - spyder-kernels=3.0.5
+  - pyarrow
+  - pycountry  
+  - pip
+  - openpyxl
+  - pip:
+      - comtradeapicall==1.2.1
+      - py-cpuinfo
+      - wmi

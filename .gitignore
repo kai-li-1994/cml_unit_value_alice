@@ -1,0 +1,5 @@
+# Folders to ignore
+data_uncomtrade/
+__pycache__/
+
+# Files to ignore
