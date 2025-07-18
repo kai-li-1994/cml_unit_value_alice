@@ -28,7 +28,6 @@ def detect_environment():
         return "unknown"
     
 def get_base_dir():
-    
     env = detect_environment()
 
     if env == "alice":
@@ -36,7 +35,15 @@ def get_base_dir():
     elif env == "claix":
         return "/home/lik6/projects/claix_data/cml_unit_value"
     elif env == "windows":
-        return "C:/Users/lik6/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value"
+        # Try multiple options and pick the one that exists
+        candidate_dirs = [
+            "C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice",
+            "C:/Users/lik6/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value"
+        ]
+        for d in candidate_dirs:
+            if os.path.exists(d):
+                return d
+        raise RuntimeError("❌ Windows environment detected, but none of the known base directories exist.")
     elif env == "linux":
         return "/home/lik6/projects/cml_unit_value"
     else:
@@ -81,6 +88,7 @@ def load_config(
     possible_paths = [
         "C:/Users/lik6/AppData/Local/Programs/R/R-4.5.1/bin/x64/Rscript.exe",  # laptop
         "C:/Program Files/R/R-4.4.1/bin/x64/Rscript.exe",                      # desktop
+        "C:/Program Files/R/R-4.5.1/bin/Rscript.exe"                           # rwth-aachen laptop
     ]
 
     # First, check hardcoded Windows locations
@@ -99,11 +107,14 @@ def load_config(
             "❌ Rscript not found. On HPC, please run `module load R/...` before executing. "
             "On Windows, please check your R installation."
         )
-        
+
+    # Optional override for missing local folder
+    input_dir = "C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade"
+
     # === Define and create directories ===
     dirs = {
         "base": base_dir,
-        "input": os.path.join(base_dir, "data_uncomtrade"),
+        "input": input_dir,
         "figures": os.path.join(base_dir, "figures"),
         "logs": os.path.join(base_dir, "logs"),
         "reports": os.path.join(base_dir, "reports"),

@@ -2,6 +2,7 @@
 Author: Kai Li
 Created on Fri Apr  4 10:01:19 2025
 Contact: k.li@cml.leidenuniv.nl (xiaoshancqu@gmail.com)
+Last updated: 2025-07-18 17:20:00
 """
 #%% Import packages
 from datetime import date 
@@ -24,10 +25,10 @@ import cpuinfo
 import wmi
 #%% Data request comtradeapicall
 
-year = '2010'
+year = '2021'
 period = ",".join(f"{year}{month:02d}" for month in range(1, 13))
 
-path = f"C:/Users/lik6/Data/ComtradeTariffline/tariff_{year}"
+path = f"C:/Users/laptop-kl/data/ComtradeTariffline/tariff_{year}"
 #path = "./month/test"
 os.makedirs(path, exist_ok=True)
 comtradeapicall.bulkDownloadTarifflineFile("707b66b3161940889e89edcea764320b", 
@@ -36,15 +37,28 @@ comtradeapicall.bulkDownloadTarifflineFile("707b66b3161940889e89edcea764320b",
                             period=period, reporterCode=None, decompress=True)
 #%% Merge annual data
 start_time = time.time()
-input_folder  = f'C:/Users/lik6/Data/ComtradeTariffline/tariff_{year}'                                                        # Set your folder path
-output_folder = 'C:/Users/lik6/Data/ComtradeTariffline/merge/' 
+input_folder  = f'C:/Users/laptop-kl/data/ComtradeTariffline/tariff_{year}'   # Set your folder path
+output_folder = 'C:/Users/laptop-kl/data/ComtradeTariffline/merge/' 
 os.makedirs(output_folder, exist_ok=True)
 
-file_list = glob.glob(os.path.join(input_folder, '*.txt'))                     # Find all text files
-file_list = sorted(file_list)                                                  # Sort files to ensure correct month order
+file_list = glob.glob(os.path.join(input_folder, '*.txt'))  # Find all text files
+file_list = sorted(file_list)  # Sort files to ensure correct month order
 
-output_path = os.path.join(output_folder, f'all_{year}_merged.txt')        # Build the path and filename where the merged file will be saved
-log_path    = os.path.join(output_folder, f'log_merge_{year}.txt')
+# === Extract latest update date from filenames like [2024-02-26]
+def extract_file_date(filename):
+    match = re.search(r'\[(\d{4}-\d{2}-\d{2})\]', filename)
+    return match.group(1) if match else None
+
+all_dates = [extract_file_date(os.path.basename(f)) for f in file_list]
+valid_dates = [d for d in all_dates if d is not None]
+latest_update_date = max(valid_dates) if valid_dates else "unknown"
+latest_update_compact = latest_update_date.replace('-', '') if latest_update_date != "unknown" else "unknown"
+
+# === Output filenames with current date and latest update
+today = datetime.datetime.today().strftime("%Y%m%d")
+output_path = os.path.join(output_folder, f"all_{year}_merged_{today}.txt")
+log_path = os.path.join(output_folder, f"log_merge_{year}_{today}_latest{latest_update_compact}.txt")
+
 print(f"🔵 Merging {len(file_list)} files for year {year}...")
 
 with open(output_path, 'w', encoding='utf-8') as outfile:
@@ -54,10 +68,11 @@ with open(output_path, 'w', encoding='utf-8') as outfile:
             for idx, line in enumerate(infile):
                 if first_file or idx > 0:  # Keep header only for the first file
                     outfile.write(line)
-        first_file = False  # After first file done
+        first_file = False
 
 print(f"✅ Saved merged file: {output_path}")
-    
+
+# === System info and log ===
 cpu_info = cpuinfo.get_cpu_info()['brand_raw']
 cpu_cores = psutil.cpu_count(logical=False)
 cpu_threads = psutil.cpu_count(logical=True)
@@ -70,7 +85,8 @@ with open(log_path, 'w', encoding='utf-8') as log:
     log.write("====================\n")
     log.write(f"Year Merged: {year}\n")
     log.write(f"Log Created At: {current_time}\n")
-    log.write(f"Total Merging Time: {total_time:.2f} seconds\n\n")
+    log.write(f"Total Merging Time: {total_time:.2f} seconds\n")
+    log.write(f"Latest Update Date (from filenames): {latest_update_date}\n\n")
 
     log.write("System Information\n")
     log.write("----------------------\n")
@@ -87,12 +103,12 @@ with open(log_path, 'w', encoding='utf-8') as log:
 print(f"📝 Merge log saved at: {log_path}")
 #%% split by HS6 using Numpy (fast processing)
 # === Settings ===
-input_path = f'C:/Users/lik6/Data/ComtradeTariffline/merge/all_{year}_merged.txt'
-output_folder = f'C:/Users/lik6/Data/ComtradeTariffline/merge/split_by_hs_{year}_numpy'
+input_path = f'C:/Users/laptop-kl/data/ComtradeTariffline/merge/all_{year}_merged_{today}.txt'
+output_folder = f'C:/Users/laptop-kl/data/ComtradeTariffline/merge/split_by_hs_{year}_numpy_{today}'
 #output_folder = './month/merge/split_by_hs_2023_numpy'
-checkpoint_file = f'C:/Users/lik6/Data/ComtradeTariffline/merge/split_by_hs_{year}_numpy_checkpoint.txt'
+checkpoint_file = f'C:/Users/laptop-kl/data/ComtradeTariffline/merge/split_by_hs_{year}_numpy_checkpoint.txt'
 #checkpoint_file = './month/merge/split_by_hs_2023_numpy_checkpoint.txt'
-hs_code_cache_folder = 'C:/Users/lik6/Data/hs_code_reference'
+hs_code_cache_folder = 'C:/Users/laptop-kl/data/hs_code_reference'
 os.makedirs(output_folder, exist_ok=True)
 os.makedirs(hs_code_cache_folder, exist_ok=True)
 
