@@ -27,8 +27,8 @@ from uv_visualization import plot_histogram, plot_dist
 
 # subscription_key = "4a624b220f67400c9a6ef19b1890f1f9"
 # path = 'C:/Users/lik6/Data/ComtradeTariffline/merge/split_by_hs_2023_numpy'
-#code = "390110"
-#year = "2021"
+#code = "010129"
+#year = "2010"
 #flow = "m"
 
 

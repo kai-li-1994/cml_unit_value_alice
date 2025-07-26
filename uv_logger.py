@@ -17,7 +17,7 @@ def logger_setup(name="trade_logger", level=logging.INFO, log_to_file=True,
     if not any(isinstance(h, logging.StreamHandler) for h in logger.handlers):
         stream_handler = logging.StreamHandler()
         formatter = ColoredFormatter(
-            "%(log_color)s[%(asctime)s] %(levelname)-8s%(reset)s %(message)s",
+            "%(log_color)s[%(asctime)s] %(levelname)s%(reset)s %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S",
             log_colors={
                 "DEBUG":    "cyan",
@@ -41,7 +41,7 @@ def logger_setup(name="trade_logger", level=logging.INFO, log_to_file=True,
             os.makedirs(log_dir, exist_ok=True)
             file_handler = logging.FileHandler(log_path)
             file_formatter = logging.Formatter(
-                "[%(asctime)s] %(levelname)-8s %(message)s",
+                "[%(asctime)s] %(levelname)s %(message)s",
                 datefmt="%Y-%m-%d %H:%M:%S"
             )
             file_handler.setFormatter(file_formatter)

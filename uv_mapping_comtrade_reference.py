@@ -46,3 +46,19 @@ with open("uv_mapping_unitAbbr.pkl", "wb") as f:
     pickle.dump(unit_abbr_map, f)
 
 print("✅ Saved: uv_mapping_unit.pkl and uv_mapping_unitAbbr.pkl")
+
+# === HS code mapping ===
+df_hs = comtradeapicall.getReference('cmd:HS')
+
+# Filter to 6-digit codes (aggrLevel == 6)
+df_hs["id"] = df_hs["id"].astype(str)
+df_hs_leaf = df_hs[df_hs["aggrLevel"] == 6].copy()
+
+# Extract the actual description from the 'text' field
+hs_desc_map = df_hs_leaf.set_index("id")["text"].str.extract(r"-\s*(.+)$")[0].str.strip().to_dict()
+
+# Save as pickle
+with open("./pkl/uv_mapping_hsdesc.pkl", "wb") as f:
+    pickle.dump(hs_desc_map, f)
+
+print("✅ Saved: uv_mapping_hsdesc.pkl")

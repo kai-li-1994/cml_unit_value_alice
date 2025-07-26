@@ -1,0 +1,184 @@
+[2025-07-25 14:46:35] INFO     Clean trade data (HS 010129, 2010, M)
+[2025-07-25 14:46:57] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010129_2010.csv
+[2025-07-25 14:46:57] INFO     🧹 Cleaning Summary:
+[2025-07-25 14:46:57] INFO      - Initial rows: 113
+[2025-07-25 14:46:57] INFO      - Valid country filter: 113 (100.00%)
+[2025-07-25 14:46:57] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 14:46:57] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 14:46:57] WARNING  ⚠️ Only 0 kg-based UV records (<200)
+[2025-07-25 14:46:57] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 14:46:57] INFO     ✅ Finished cleaning: HS 010129, Year 2010, Flow M
+[2025-07-25 15:12:11] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010129_2010.csv
+[2025-07-25 15:12:11] INFO     🧹 Cleaning Summary:
+[2025-07-25 15:12:11] INFO      - Initial rows: 113
+[2025-07-25 15:12:11] INFO      - Valid country filter: 113 (100.00%)
+[2025-07-25 15:12:11] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 15:12:11] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 15:12:11] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 15:12:11] INFO     ✅ Finished cleaning: HS 010129, Year 2010, Flow M
+[2025-07-25 15:13:53] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010129_2010.csv
+[2025-07-25 15:17:25] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391590_2010.csv
+[2025-07-25 15:17:25] INFO     🧹 Cleaning Summary:
+[2025-07-25 15:17:25] INFO      - Initial rows: 12604
+[2025-07-25 15:17:25] INFO      - Valid country filter: 11445 (90.80%)
+[2025-07-25 15:17:25] INFO      - Valid trade value filter: 1298 (10.30%)
+[2025-07-25 15:17:25] INFO      - Valid kg-based UV rows: 1206 (9.57%)
+[2025-07-25 15:17:25] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 15:17:25] INFO     ✅ Finished cleaning: HS 391590, Year 2010, Flow M
+[2025-07-25 15:17:45] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391590_2010.csv
+[2025-07-25 15:17:45] INFO     🧹 Cleaning Summary:
+[2025-07-25 15:17:45] INFO      - Initial rows: 12604
+[2025-07-25 15:17:45] INFO      - Valid country filter: 11445 (90.80%)
+[2025-07-25 15:17:45] INFO      - Valid trade value filter: 1298 (10.30%)
+[2025-07-25 15:17:45] INFO      - Valid kg-based UV rows: 1206 (9.57%)
+[2025-07-25 15:17:45] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 15:17:45] INFO     ✅ Finished cleaning: HS 391590, Year 2010, Flow M
+[2025-07-25 15:18:37] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391590_2010.csv
+[2025-07-25 15:20:34] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391590_2010.csv
+[2025-07-25 15:20:34] INFO     🧹 Cleaning Summary:
+[2025-07-25 15:20:34] INFO      - Initial rows: 12604
+[2025-07-25 15:20:34] INFO      - Valid country filter: 11445 (90.80%)
+[2025-07-25 15:20:34] INFO      - Valid trade value filter: 1298 (10.30%)
+[2025-07-25 15:20:34] INFO      - Valid kg-based UV rows: 1206 (9.57%)
+[2025-07-25 15:20:34] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 15:20:34] INFO     ✅ Finished cleaning: HS 391590, Year 2010, Flow M
+[2025-07-25 15:21:35] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391510_2010.csv
+[2025-07-25 15:21:35] INFO     🧹 Cleaning Summary:
+[2025-07-25 15:21:35] INFO      - Initial rows: 5143
+[2025-07-25 15:21:35] INFO      - Valid country filter: 4650 (90.41%)
+[2025-07-25 15:21:35] INFO      - Valid trade value filter: 551 (10.71%)
+[2025-07-25 15:21:35] INFO      - Valid kg-based UV rows: 536 (10.42%)
+[2025-07-25 15:21:35] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 15:21:35] INFO     ✅ Finished cleaning: HS 391510, Year 2010, Flow M
+[2025-07-25 15:22:00] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391510_2010.csv
+[2025-07-25 15:22:00] INFO     🧹 Cleaning Summary:
+[2025-07-25 15:22:00] INFO      - Initial rows: 5143
+[2025-07-25 15:22:00] INFO      - Valid country filter: 4650 (90.41%)
+[2025-07-25 15:22:00] INFO      - Valid trade value filter: 551 (10.71%)
+[2025-07-25 15:22:00] INFO      - Valid kg-based UV rows: 536 (10.42%)
+[2025-07-25 15:22:00] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 15:22:00] INFO     ✅ Finished cleaning: HS 391510, Year 2010, Flow M
+[2025-07-25 15:23:37] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391510_2010.csv
+[2025-07-25 15:23:37] INFO     🧹 Cleaning Summary:
+[2025-07-25 15:23:37] INFO      - Initial rows: 5143
+[2025-07-25 15:23:37] INFO      - Valid country filter: 4650 (90.41%)
+[2025-07-25 15:23:37] INFO      - Valid trade value filter: 551 (10.71%)
+[2025-07-25 15:23:37] INFO      - Valid kg-based UV rows: 536 (10.42%)
+[2025-07-25 15:23:37] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 15:23:37] INFO     ✅ Finished cleaning: HS 391510, Year 2010, Flow M
+[2025-07-25 15:25:17] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391510_2010.csv
+[2025-07-25 15:25:17] INFO     🧹 Cleaning Summary:
+[2025-07-25 15:25:17] INFO      - Initial rows: 5143
+[2025-07-25 15:25:17] INFO      - Valid country filter: 4650 (90.41%)
+[2025-07-25 15:25:17] INFO      - Valid trade value filter: 551 (10.71%)
+[2025-07-25 15:25:17] INFO      - Valid kg-based UV rows: 536 (10.42%)
+[2025-07-25 15:25:17] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 15:25:17] INFO     ✅ Finished cleaning: HS 391510, Year 2010, Flow M
+[2025-07-25 16:36:25] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010129_2010.csv
+[2025-07-25 16:36:25] INFO     🧹 Cleaning Summary:
+[2025-07-25 16:36:25] INFO      - Initial rows: 113
+[2025-07-25 16:36:25] INFO      - Valid country filter: 113 (100.00%)
+[2025-07-25 16:36:25] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 16:36:25] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 16:36:25] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 16:36:25] INFO     ✅ Finished cleaning: HS 010129, Year 2010, Flow M
+[2025-07-25 16:44:45] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010129_2010.csv
+[2025-07-25 16:44:45] INFO     🧹 Cleaning Summary:
+[2025-07-25 16:44:45] INFO      - Initial rows: 113
+[2025-07-25 16:44:45] INFO      - Valid country filter: 113 (100.00%)
+[2025-07-25 16:44:45] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 16:44:45] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 16:44:45] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 16:44:45] INFO     ✅ Finished cleaning: HS 010129, Year 2010, Flow M
+[2025-07-25 17:22:38] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010129_2010.csv
+[2025-07-25 17:22:38] INFO     🧹 Cleaning Summary:
+[2025-07-25 17:22:38] INFO      - Initial rows: 113
+[2025-07-25 17:22:38] INFO      - Valid country filter: 113 (100.00%)
+[2025-07-25 17:22:38] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 17:22:38] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 17:22:38] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 17:22:38] INFO     ✅ Finished cleaning: HS 010129, Year 2010, Flow M
+[2025-07-25 17:25:26] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010129_2010.csv
+[2025-07-25 17:25:26] INFO     🧹 Cleaning Summary:
+[2025-07-25 17:25:26] INFO      - Initial rows: 113
+[2025-07-25 17:25:26] INFO      - Valid country filter: 113 (100.00%)
+[2025-07-25 17:25:26] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 17:25:26] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 17:25:26] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 17:25:26] INFO     ✅ Finished cleaning: HS 010129, Year 2010, Flow M
+[2025-07-25 17:27:47] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010129_2010.csv
+[2025-07-25 17:27:47] INFO     🧹 Cleaning Summary:
+[2025-07-25 17:27:47] INFO      - Initial rows: 113
+[2025-07-25 17:27:47] INFO      - Valid country filter: 113 (100.00%)
+[2025-07-25 17:27:47] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 17:27:47] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 17:27:47] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 17:27:47] INFO     ✅ Finished cleaning: HS 010129, Year 2010, Flow M
+[2025-07-25 17:27:51] WARNING  ⚠️ No valid UV records available for 010129-2010-m — skipping outlier detection.
+[2025-07-25 17:36:06] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391590_2010.csv
+[2025-07-25 17:36:06] INFO     🧹 Cleaning Summary:
+[2025-07-25 17:36:06] INFO      - Initial rows: 12604
+[2025-07-25 17:36:06] INFO      - Valid country filter: 11445 (90.80%)
+[2025-07-25 17:36:06] INFO      - Valid trade value filter: 1298 (10.30%)
+[2025-07-25 17:36:06] INFO      - Valid kg-based UV rows: 1206 (9.57%)
+[2025-07-25 17:36:06] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 17:36:06] INFO     ✅ Finished cleaning: HS 391590, Year 2010, Flow M
+[2025-07-25 17:36:36] INFO     log(UV)=0 present but no spike: 127 vs. neighbors avg 115.0 (share = 1.82%) — kept
+[2025-07-25 17:36:36] INFO     📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_391590_2010_m_kg.pdf
+[2025-07-25 17:36:36] INFO     📊 Outlier Detection on USD/kg (391590-2010, m):
+[2025-07-25 17:36:36] INFO     - Total rows: 1206
+[2025-07-25 17:36:36] INFO     - Z-score outliers: 102
+[2025-07-25 17:36:36] INFO     - log(UV) = 0 rows: 22 (share = 1.82%), removed: 0
+[2025-07-25 17:36:36] INFO     - ✅ Total dropped: 102 rows (8.458%)
+[2025-07-25 17:36:36] INFO     - ✅ Remaining rows: 1104
+[2025-07-25 17:48:13] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_391590_2010.csv
+[2025-07-25 17:48:13] INFO     🧹 Cleaning Summary:
+[2025-07-25 17:48:13] INFO      - Initial rows: 12604
+[2025-07-25 17:48:13] INFO      - Valid country filter: 11445 (90.80%)
+[2025-07-25 17:48:13] INFO      - Valid trade value filter: 1298 (10.30%)
+[2025-07-25 17:48:13] INFO      - Valid kg-based UV rows: 1206 (9.57%)
+[2025-07-25 17:48:13] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 17:48:13] INFO     ✅ Finished cleaning: HS 391590, Year 2010, Flow M
+[2025-07-25 17:48:27] INFO     log(UV)=0 present but no spike: 127 vs. neighbors avg 115.0 (share = 1.82%) — kept
+[2025-07-25 17:48:27] INFO     📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_391590_2010_m_kg.pdf
+[2025-07-25 17:48:27] INFO     📊 Outlier Detection on USD/kg (391590-2010, m):
+[2025-07-25 17:48:27] INFO     - Total rows: 1206
+[2025-07-25 17:48:27] INFO     - Z-score outliers: 102
+[2025-07-25 17:48:27] INFO     - log(UV) = 0 rows: 22 (share = 1.82%), removed: 0
+[2025-07-25 17:48:27] INFO     - ✅ Total dropped: 102 rows (8.458%)
+[2025-07-25 17:48:27] INFO     - ✅ Remaining rows: 1104
+[2025-07-25 17:49:37] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010130_2010.csv
+[2025-07-25 17:49:37] INFO     🧹 Cleaning Summary:
+[2025-07-25 17:49:37] INFO      - Initial rows: 5
+[2025-07-25 17:49:37] INFO      - Valid country filter: 5 (100.00%)
+[2025-07-25 17:49:37] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 17:49:37] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 17:49:37] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 17:49:37] INFO     ✅ Finished cleaning: HS 010130, Year 2010, Flow M
+[2025-07-25 17:50:02] WARNING  ⚠️ No valid UV records available for 010130-2010-m — skipping outlier detection.
+[2025-07-25 17:54:25] WARNING  ⚠️ No valid UV records available for 010130-2010-m — skipping outlier detection.
+[2025-07-25 17:54:30] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010130_2010.csv
+[2025-07-25 17:54:30] INFO     🧹 Cleaning Summary:
+[2025-07-25 17:54:30] INFO      - Initial rows: 5
+[2025-07-25 17:54:30] INFO      - Valid country filter: 5 (100.00%)
+[2025-07-25 17:54:30] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 17:54:30] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 17:54:30] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 17:54:30] INFO     ✅ Finished cleaning: HS 010130, Year 2010, Flow M
+[2025-07-25 17:54:37] WARNING  ⚠️ No valid UV records available for 010130-2010-m — skipping outlier detection.
+[2025-07-25 17:57:50] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010130_2010.csv
+[2025-07-25 17:57:50] INFO     🧹 Cleaning Summary:
+[2025-07-25 17:57:50] INFO      - Initial rows: 5
+[2025-07-25 17:57:50] INFO      - Valid country filter: 5 (100.00%)
+[2025-07-25 17:57:50] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 17:57:50] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 17:57:50] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 17:57:50] INFO     ✅ Finished cleaning: HS 010130, Year 2010, Flow M
+[2025-07-25 18:50:46] INFO     📄 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010130_2010.csv
+[2025-07-25 18:50:46] INFO     🧹 Cleaning Summary:
+[2025-07-25 18:50:46] INFO      - Initial rows: 5
+[2025-07-25 18:50:46] INFO      - Valid country filter: 5 (100.00%)
+[2025-07-25 18:50:46] INFO      - Valid trade value filter: 0 (0.00%)
+[2025-07-25 18:50:46] INFO      - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-25 18:50:46] WARNING  ⚠️ No non-kg units found in qty rows.
+[2025-07-25 18:50:46] INFO     ✅ Finished cleaning: HS 010130, Year 2010, Flow M

@@ -53,6 +53,7 @@ def load_config(
     country_file="./pkl/uv_mapping_country.pkl",
     unit_file="./pkl/uv_mapping_unit.pkl",
     unit_abbr_file="./pkl/uv_mapping_unitAbbr.pkl",
+    hs_desc_file="./pkl/uv_mapping_hsdesc.pkl",
     ):
     """Load ISO mappings, group list, quantity unit mappings, and thresholds from pickle files."""
     
@@ -75,6 +76,9 @@ def load_config(
 
     with open(unit_abbr_file, "rb") as f:
         unit_abbr_map = pickle.load(f)
+        
+    with open(hs_desc_file, "rb") as f:
+        hs_desc_map = pickle.load(f)
     
 
     # === Define essential columns for early-stage processing ===
@@ -127,6 +131,7 @@ def load_config(
         "lst_gp": lst_gp,
         "unit_map": unit_map,
         "unit_abbr_map": unit_abbr_map,
+        "hs_desc_map": hs_desc_map,
         "cols_to_keep_early": cols_to_keep_early,
         "q_share_threshold": 0.10,
         "min_records_q": 200,

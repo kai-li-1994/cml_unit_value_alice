@@ -23,6 +23,50 @@ import json
 import psutil
 import cpuinfo
 import wmi
+#%% Status of data availability (2010–2023)
+
+api_key = "707b66b3161940889e89edcea764320b"
+
+results = []
+
+for year in range(2008, 2025):
+    period = ",".join(f"{year}{month:02d}" for month in range(1, 13))
+
+    mydf = comtradeapicall.getTarifflineDataAvailability(
+        api_key, typeCode='C', freqCode='M', 
+        clCode='HS', period=period, reporterCode=None
+    )
+    
+    if mydf is not None and not mydf.empty:
+        total_records = int(mydf['totalRecords'].sum())
+        country_month_pairs = mydf[[
+                         'period', 'reporterCode']].drop_duplicates().shape[0]
+        number_reporting_countries = mydf['reporterCode'].nunique()
+        latest_date = mydf['lastReleased'].max()
+    else:
+        total_records = 0
+        datasets = 0
+        country_month_pairs = 0
+        n_reporting_countries = 0
+        latest_date = pd.NaT
+
+    results.append({
+        "year": year,
+        "latest_released_date": latest_date,
+        "total_records": total_records,
+        "country_month_pairs": country_month_pairs,
+        "number_reporting_countries": number_reporting_countries,
+    })
+    
+summary_df = pd.DataFrame(results)
+max_pairs = summary_df['country_month_pairs'].max()
+summary_df['reporting_progress'] = (
+    summary_df['country_month_pairs'] / max_pairs).apply(lambda x: f"{x:.2f}")
+summary_df['latest_released_date'] = pd.to_datetime(
+    summary_df['latest_released_date']).dt.strftime('%Y-%m-%d')                         # accessed on 07/25/2025
+summary_df['total_records'] = summary_df[
+                                  'total_records'].apply(lambda x: f"{x:.2e}")
+summary_df.to_csv('data_availability.csv', index=False)
 #%% Data request comtradeapicall
 
 year = '2021'
