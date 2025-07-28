@@ -1,3 +1,4 @@
+import time
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,7 +8,7 @@ from uv_config import load_config
 from scipy.stats import norm, skewnorm, t, gennorm, johnsonsu, logistic
 config = load_config()
 
-def plot_histogram(data, code, year, flow, unit_label="USD/kg", save_path=None, ax=None, file_format="png"):
+def plot_histogram(data, code, year, flow, logger, unit_label="USD/kg", save_path=None, ax=None, file_format="png"):
     """
     Plot a histogram with customizable options and Freedman-Diaconis rule for bin width.
     
@@ -21,6 +22,8 @@ def plot_histogram(data, code, year, flow, unit_label="USD/kg", save_path=None, 
         ax: Optional matplotlib Axes object to plot on.
         file_format: File format for saving the figure (e.g., 'png', 'pdf', 'svg').
     """
+    logger.info(f"🚀 Histogram plotting after outlier detection (HS {code}, {year}, {flow.upper()}, {unit_label})")
+    start_time = time.time()
     mpl.rcParams['pdf.fonttype'] = 42                                         # Set rcParams to ensure editable text in the PDF
     data = np.asarray(data)  # Ensure it's a NumPy array for slicing speed
     data = data[~np.isnan(data)]  # Drop NaNs if any
@@ -43,8 +46,8 @@ def plot_histogram(data, code, year, flow, unit_label="USD/kg", save_path=None, 
     
     # Step 3: Plot histogram
     ax.hist(data, bins=bin_edges, color='lightgray', edgecolor = 'white')
-    text_d = 'imports' if flow == 'm' else 'exports'
-    ax.set_title(f"Histogram of unit values ({unit_label}) for HS {code} {text_d} in {year}")
+    #text_d = 'imports' if flow == 'm' else 'exports'
+    ax.set_title(f"Histogram of unit values after outlier detection ({unit_label}, HS{code}, {year}, {flow})")
     ax.set_xlabel(f"ln(Unit Price) [{unit_label}]")
     ax.set_ylabel("Counts")
     ax.text(0.75, 0.9, f"Sample size: {len(data):,}", transform=ax.transAxes)
@@ -57,17 +60,24 @@ def plot_histogram(data, code, year, flow, unit_label="USD/kg", save_path=None, 
         save_path = os.path.join(config["dirs"]["figures"], 
                             f"hist_{code}_{year}_{flow}_{unit_suffix}.{file_format}")
         plt.savefig(save_path, dpi=300)
+        logger.info(f"📁 Saved histogram to {save_path}")
+        
         if ax is None:
             plt.close()   
     else:
         plt.tight_layout()
         plt.show()
         
+    elapsed = time.time() - start_time    
+    logger.info(f"✅ Histogram plotting after outlier detection (HS {code}, {year}, {flow.upper()}, "
+                f"{unit_label}) completed in {elapsed:.2f} seconds.")
+
 def plot_dist(
     data,
     code,
     year,
     flow,
+    logger, 
     unit_label="USD/kg",
     dist=None,
     best_fit_name=None,
@@ -78,6 +88,10 @@ def plot_dist(
     save_path=None,
     ax=None,
     file_format="png"):
+    
+    logger.info(f"🚀 Unimodal fit plotting (HS {code}, {year}, {flow.upper()}, {unit_label})")
+    start_time = time.time()
+    
 
     colors = {
         "norm": "#66c2a5", "skewnorm": "#fc8d62", "t": "#8da0cb",
@@ -200,4 +214,9 @@ def plot_dist(
             plt.close()
     else:
         plt.show()
+        
+
+    elapsed = time.time() - start_time    
+    logger.info(f"✅ Unimodal fit plotting (HS {code}, {year}, "
+        f"{flow.upper()}, {unit_label}) completed in {elapsed:.2f} seconds.")
         

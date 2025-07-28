@@ -1,0 +1,242 @@
+[2025-07-28 18:37:00] INFO 🚀 Clean trade data (HS 220300, 2010, M)
+[2025-07-28 18:37:00] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_220300_2010.csv
+[2025-07-28 18:37:00] INFO 📈 Cleaning Summary:
+[2025-07-28 18:37:00] INFO  - Initial rows: 37720
+[2025-07-28 18:37:00] INFO  - Valid country filter: 33223 (88.08%)
+[2025-07-28 18:37:00] INFO  - Valid trade value filter: 6340 (16.81%)
+[2025-07-28 18:37:00] INFO  - Valid kg-based UV rows: 4898 (12.99%)
+[2025-07-28 18:37:00] INFO 🧪 Non-kg UV Subset:
+[2025-07-28 18:37:00] INFO  - Top unit: Volume in liters (l)
+[2025-07-28 18:37:00] INFO  - Share of valid top non-kg UV rows: 54.00% (Required: 10%)
+[2025-07-28 18:37:00] INFO  - Valid top non-kg UV count: 3213
+[2025-07-28 18:37:00] INFO ✅ Non-kg UV subset created.
+[2025-07-28 18:37:00] INFO ✅ Trade data cleaning completed in 0.16 seconds.
+[2025-07-28 18:37:00] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-28 18:37:00] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 281.5 (share = 1.33%) — kept
+[2025-07-28 18:37:00] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-28 18:37:00] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-28 18:37:00] INFO - Total rows: 4898
+[2025-07-28 18:37:00] INFO - Z-score outliers: 220
+[2025-07-28 18:37:00] INFO - log(UV) = 0 rows: 65 (share = 1.33%), removed: 0
+[2025-07-28 18:37:00] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-28 18:37:00] INFO - Remaining rows: 4678
+[2025-07-28 18:37:00] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.44 seconds.
+[2025-07-28 18:37:00] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-28 18:37:00] INFO log(UV)=0 present but no spike: 223 vs. neighbors avg 210.0 (share = 0.00%) — kept
+[2025-07-28 18:37:00] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_l.pdf
+[2025-07-28 18:37:00] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/l):
+[2025-07-28 18:37:00] INFO - Total rows: 3213
+[2025-07-28 18:37:00] INFO - Z-score outliers: 141
+[2025-07-28 18:37:00] INFO - log(UV) = 0 rows: 0 (share = 0.00%), removed: 0
+[2025-07-28 18:37:00] INFO - Total dropped: 141 rows (4.39%)
+[2025-07-28 18:37:00] INFO - Remaining rows: 3072
+[2025-07-28 18:37:00] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/l) completed in 0.30 seconds.
+[2025-07-28 18:37:00] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-28 18:37:01] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_kg.pdf
+[2025-07-28 18:37:01] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.21 seconds.
+[2025-07-28 18:37:01] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-28 18:37:01] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_l.pdf
+[2025-07-28 18:37:01] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/l) completed in 0.28 seconds.
+[2025-07-28 18:37:01] INFO 🚀 Modality test (HS 220300, 2010, M, USD/kg)
+[2025-07-28 18:37:08] INFO 📈 Modality test summary:
+[2025-07-28 18:37:08] INFO - Column tested: ln_uv
+[2025-07-28 18:37:08] INFO - Original sample size: 4678
+[2025-07-28 18:37:08] INFO ✅ Full sample used.
+[2025-07-28 18:37:08] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-28 18:37:08] INFO ✅ Modality test (HS 220300, 2010, M, USD/kg) completed in 7.28 seconds.
+[2025-07-28 18:37:08] INFO 🚀 Modality test (HS 220300, 2010, M, USD/l)
+[2025-07-28 18:37:15] INFO 📈 Modality test summary:
+[2025-07-28 18:37:15] INFO - Column tested: ln_uv_q
+[2025-07-28 18:37:15] INFO - Original sample size: 3072
+[2025-07-28 18:37:15] INFO ✅ Full sample used.
+[2025-07-28 18:37:15] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-28 18:37:15] INFO ✅ Modality test (HS 220300, 2010, M, USD/l) completed in 6.91 seconds.
+[2025-07-28 18:37:15] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/kg)
+[2025-07-28 18:37:15] INFO Fitted Norm Distribution
+[2025-07-28 18:37:15] INFO norm_loc: 0.2385
+[2025-07-28 18:37:15] INFO norm_scale: 0.7779
+[2025-07-28 18:37:15] INFO norm_loglik: -5463.0073
+[2025-07-28 18:37:15] INFO norm_mean: 0.2385
+[2025-07-28 18:37:15] INFO norm_median: 0.2385
+[2025-07-28 18:37:15] INFO norm_mode: 0.2385
+[2025-07-28 18:37:15] INFO norm_variance: 0.6052
+[2025-07-28 18:37:15] INFO norm_sample_variance: 0.6053
+[2025-07-28 18:37:15] INFO norm_skew: 0.0000
+[2025-07-28 18:37:15] INFO norm_kurtosis: 0.0000
+[2025-07-28 18:37:15] INFO norm_aic: 10930.0146
+[2025-07-28 18:37:15] INFO norm_bic: 10942.9159
+[2025-07-28 18:37:15] INFO Fitted Skewnorm Distribution
+[2025-07-28 18:37:15] INFO skewnorm_a: 2.0748
+[2025-07-28 18:37:15] INFO skewnorm_loc: -0.5555
+[2025-07-28 18:37:15] INFO skewnorm_scale: 1.1116
+[2025-07-28 18:37:15] INFO skewnorm_loglik: -5341.4143
+[2025-07-28 18:37:15] INFO skewnorm_mean: 0.2434
+[2025-07-28 18:37:15] INFO skewnorm_median: 0.1758
+[2025-07-28 18:37:15] INFO skewnorm_mode: 0.0305
+[2025-07-28 18:37:15] INFO skewnorm_variance: 0.5973
+[2025-07-28 18:37:15] INFO skewnorm_sample_variance: 0.6053
+[2025-07-28 18:37:15] INFO skewnorm_skew: 0.4742
+[2025-07-28 18:37:15] INFO skewnorm_kurtosis: 0.3235
+[2025-07-28 18:37:15] INFO skewnorm_aic: 10688.8287
+[2025-07-28 18:37:15] INFO skewnorm_bic: 10708.1806
+[2025-07-28 18:37:15] INFO Fitted T Distribution
+[2025-07-28 18:37:15] INFO t_df: 7.2238
+[2025-07-28 18:37:15] INFO t_loc: 0.1942
+[2025-07-28 18:37:15] INFO t_scale: 0.6677
+[2025-07-28 18:37:15] INFO t_loglik: -5416.1700
+[2025-07-28 18:37:15] INFO t_mean: 0.1942
+[2025-07-28 18:37:15] INFO t_median: 0.1942
+[2025-07-28 18:37:15] INFO t_mode: 0.1942
+[2025-07-28 18:37:15] INFO t_variance: 0.6165
+[2025-07-28 18:37:15] INFO t_sample_variance: 0.6053
+[2025-07-28 18:37:15] INFO t_skew: 0.0000
+[2025-07-28 18:37:15] INFO t_kurtosis: 1.8612
+[2025-07-28 18:37:15] INFO t_aic: 10838.3400
+[2025-07-28 18:37:15] INFO t_bic: 10857.6919
+[2025-07-28 18:37:15] INFO Fitted Gennorm Distribution
+[2025-07-28 18:37:15] INFO gennorm_beta: 1.4526
+[2025-07-28 18:37:15] INFO gennorm_loc: 0.1936
+[2025-07-28 18:37:15] INFO gennorm_scale: 0.8808
+[2025-07-28 18:37:15] INFO gennorm_loglik: -5410.0713
+[2025-07-28 18:37:15] INFO gennorm_mean: 0.1936
+[2025-07-28 18:37:15] INFO gennorm_median: 0.1936
+[2025-07-28 18:37:15] INFO gennorm_mode: 0.1936
+[2025-07-28 18:37:15] INFO gennorm_variance: 0.6065
+[2025-07-28 18:37:15] INFO gennorm_sample_variance: 0.6053
+[2025-07-28 18:37:15] INFO gennorm_skew: 0.0000
+[2025-07-28 18:37:15] INFO gennorm_kurtosis: 0.8766
+[2025-07-28 18:37:15] INFO gennorm_aic: 10826.1425
+[2025-07-28 18:37:15] INFO gennorm_bic: 10845.4944
+[2025-07-28 18:37:15] INFO Fitted Johnsonsu Distribution
+[2025-07-28 18:37:15] INFO johnsonsu_a: -1.0761
+[2025-07-28 18:37:15] INFO johnsonsu_b: 2.1598
+[2025-07-28 18:37:15] INFO johnsonsu_loc: -0.5315
+[2025-07-28 18:37:15] INFO johnsonsu_scale: 1.3339
+[2025-07-28 18:37:15] INFO johnsonsu_loglik: -5320.5633
+[2025-07-28 18:37:15] INFO johnsonsu_mean: 0.2393
+[2025-07-28 18:37:15] INFO johnsonsu_median: 0.1609
+[2025-07-28 18:37:15] INFO johnsonsu_mode: 0.0369
+[2025-07-28 18:37:15] INFO johnsonsu_variance: 0.6183
+[2025-07-28 18:37:15] INFO johnsonsu_sample_variance: 0.6053
+[2025-07-28 18:37:15] INFO johnsonsu_skew: 0.7807
+[2025-07-28 18:37:15] INFO johnsonsu_kurtosis: 2.0659
+[2025-07-28 18:37:15] INFO johnsonsu_aic: 10649.1265
+[2025-07-28 18:37:15] INFO johnsonsu_bic: 10674.9290
+[2025-07-28 18:37:15] INFO Fitted Logistic Distribution
+[2025-07-28 18:37:15] INFO logistic_loc: 0.1935
+[2025-07-28 18:37:15] INFO logistic_scale: 0.4294
+[2025-07-28 18:37:15] INFO logistic_loglik: -5410.2241
+[2025-07-28 18:37:15] INFO logistic_mean: 0.1935
+[2025-07-28 18:37:15] INFO logistic_median: 0.1935
+[2025-07-28 18:37:15] INFO logistic_mode: 0.1935
+[2025-07-28 18:37:15] INFO logistic_variance: 0.6067
+[2025-07-28 18:37:15] INFO logistic_sample_variance: 0.6053
+[2025-07-28 18:37:15] INFO logistic_skew: 0.0000
+[2025-07-28 18:37:15] INFO logistic_kurtosis: 1.2000
+[2025-07-28 18:37:15] INFO logistic_aic: 10824.4482
+[2025-07-28 18:37:15] INFO logistic_bic: 10837.3495
+[2025-07-28 18:37:15] INFO Best fit based on AIC/BIC: Johnsonsu
+[2025-07-28 18:37:15] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/kg) completed in 0.23 seconds.
+[2025-07-28 18:37:15] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/kg)
+[2025-07-28 18:37:56] INFO 95% CI for Mean: 0.217 – 0.261 (log), 1.243 – 1.298 USD/kg
+[2025-07-28 18:37:56] INFO 95% CI for Median: 0.140 – 0.183 (log), 1.150 – 1.201 USD/kg
+[2025-07-28 18:37:56] INFO 95% CI for Mode: 0.009 – 0.067 (log), 1.009 – 1.069 USD/kg
+[2025-07-28 18:37:56] INFO 95% CI for Variance: 0.586 – 0.652
+[2025-07-28 18:37:56] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/kg) completed in 40.57 seconds.
+[2025-07-28 18:37:56] INFO 🚀 Unimodal fit plotting (HS 220300, 2010, M, USD/kg)
+[2025-07-28 18:37:56] INFO ✅ Unimodal fit plotting (HS 220300, 2010, M, USD/kg) completed in 0.36 seconds.
+[2025-07-28 18:37:56] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/l)
+[2025-07-28 18:37:56] INFO Fitted Norm Distribution
+[2025-07-28 18:37:56] INFO norm_loc: 0.1869
+[2025-07-28 18:37:56] INFO norm_scale: 0.6692
+[2025-07-28 18:37:56] INFO norm_loglik: -3124.9854
+[2025-07-28 18:37:56] INFO norm_mean: 0.1869
+[2025-07-28 18:37:56] INFO norm_median: 0.1869
+[2025-07-28 18:37:56] INFO norm_mode: 0.1869
+[2025-07-28 18:37:56] INFO norm_variance: 0.4478
+[2025-07-28 18:37:56] INFO norm_sample_variance: 0.4480
+[2025-07-28 18:37:56] INFO norm_skew: 0.0000
+[2025-07-28 18:37:56] INFO norm_kurtosis: 0.0000
+[2025-07-28 18:37:56] INFO norm_aic: 6253.9708
+[2025-07-28 18:37:56] INFO norm_bic: 6266.0310
+[2025-07-28 18:37:56] INFO Fitted Skewnorm Distribution
+[2025-07-28 18:37:56] INFO skewnorm_a: 1.3061
+[2025-07-28 18:37:56] INFO skewnorm_loc: -0.3581
+[2025-07-28 18:37:56] INFO skewnorm_scale: 0.8630
+[2025-07-28 18:37:56] INFO skewnorm_loglik: -3104.3661
+[2025-07-28 18:37:56] INFO skewnorm_mean: 0.1886
+[2025-07-28 18:37:56] INFO skewnorm_median: 0.1613
+[2025-07-28 18:37:56] INFO skewnorm_mode: 0.1054
+[2025-07-28 18:37:56] INFO skewnorm_variance: 0.4459
+[2025-07-28 18:37:56] INFO skewnorm_sample_variance: 0.4480
+[2025-07-28 18:37:56] INFO skewnorm_skew: 0.2356
+[2025-07-28 18:37:56] INFO skewnorm_kurtosis: 0.1273
+[2025-07-28 18:37:56] INFO skewnorm_aic: 6214.7322
+[2025-07-28 18:37:56] INFO skewnorm_bic: 6232.8224
+[2025-07-28 18:37:56] INFO Fitted T Distribution
+[2025-07-28 18:37:56] INFO t_df: 6.5561
+[2025-07-28 18:37:56] INFO t_loc: 0.1689
+[2025-07-28 18:37:56] INFO t_scale: 0.5647
+[2025-07-28 18:37:56] INFO t_loglik: -3087.7142
+[2025-07-28 18:37:56] INFO t_mean: 0.1689
+[2025-07-28 18:37:56] INFO t_median: 0.1689
+[2025-07-28 18:37:56] INFO t_mode: 0.1689
+[2025-07-28 18:37:56] INFO t_variance: 0.4588
+[2025-07-28 18:37:56] INFO t_sample_variance: 0.4480
+[2025-07-28 18:37:56] INFO t_skew: 0.0000
+[2025-07-28 18:37:56] INFO t_kurtosis: 2.3474
+[2025-07-28 18:37:56] INFO t_aic: 6181.4283
+[2025-07-28 18:37:56] INFO t_bic: 6199.5186
+[2025-07-28 18:37:56] INFO Fitted Gennorm Distribution
+[2025-07-28 18:37:56] INFO gennorm_beta: 1.3779
+[2025-07-28 18:37:56] INFO gennorm_loc: 0.1755
+[2025-07-28 18:37:56] INFO gennorm_scale: 0.7205
+[2025-07-28 18:37:56] INFO gennorm_loglik: -3074.6005
+[2025-07-28 18:37:56] INFO gennorm_mean: 0.1755
+[2025-07-28 18:37:56] INFO gennorm_median: 0.1755
+[2025-07-28 18:37:56] INFO gennorm_mode: 0.1755
+[2025-07-28 18:37:56] INFO gennorm_variance: 0.4487
+[2025-07-28 18:37:56] INFO gennorm_sample_variance: 0.4480
+[2025-07-28 18:37:56] INFO gennorm_skew: 0.0000
+[2025-07-28 18:37:56] INFO gennorm_kurtosis: 1.0822
+[2025-07-28 18:37:56] INFO gennorm_aic: 6155.2010
+[2025-07-28 18:37:56] INFO gennorm_bic: 6173.2913
+[2025-07-28 18:37:56] INFO Fitted Johnsonsu Distribution
+[2025-07-28 18:37:56] INFO johnsonsu_a: -0.3280
+[2025-07-28 18:37:56] INFO johnsonsu_b: 1.9167
+[2025-07-28 18:37:56] INFO johnsonsu_loc: -0.0307
+[2025-07-28 18:37:56] INFO johnsonsu_scale: 1.1038
+[2025-07-28 18:37:56] INFO johnsonsu_loglik: -3075.5195
+[2025-07-28 18:37:56] INFO johnsonsu_mean: 0.1868
+[2025-07-28 18:37:56] INFO johnsonsu_median: 0.1591
+[2025-07-28 18:37:56] INFO johnsonsu_mode: 0.1184
+[2025-07-28 18:37:56] INFO johnsonsu_variance: 0.4556
+[2025-07-28 18:37:56] INFO johnsonsu_sample_variance: 0.4480
+[2025-07-28 18:37:56] INFO johnsonsu_skew: 0.3492
+[2025-07-28 18:37:56] INFO johnsonsu_kurtosis: 1.8813
+[2025-07-28 18:37:56] INFO johnsonsu_aic: 6159.0389
+[2025-07-28 18:37:56] INFO johnsonsu_bic: 6183.1592
+[2025-07-28 18:37:56] INFO Fitted Logistic Distribution
+[2025-07-28 18:37:56] INFO logistic_loc: 0.1704
+[2025-07-28 18:37:56] INFO logistic_scale: 0.3677
+[2025-07-28 18:37:56] INFO logistic_loglik: -3082.5184
+[2025-07-28 18:37:56] INFO logistic_mean: 0.1704
+[2025-07-28 18:37:56] INFO logistic_median: 0.1704
+[2025-07-28 18:37:56] INFO logistic_mode: 0.1704
+[2025-07-28 18:37:56] INFO logistic_variance: 0.4448
+[2025-07-28 18:37:56] INFO logistic_sample_variance: 0.4480
+[2025-07-28 18:37:56] INFO logistic_skew: 0.0000
+[2025-07-28 18:37:56] INFO logistic_kurtosis: 1.2000
+[2025-07-28 18:37:56] INFO logistic_aic: 6169.0368
+[2025-07-28 18:37:56] INFO logistic_bic: 6181.0970
+[2025-07-28 18:37:56] INFO Best fit based on AIC/BIC: Gennorm
+[2025-07-28 18:37:56] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/l) completed in 0.19 seconds.
+[2025-07-28 18:37:56] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/l)
+[2025-07-28 18:38:06] INFO 95% CI for Mean: 0.154 – 0.198 (log), 1.167 – 1.218 USD/kg
+[2025-07-28 18:38:06] INFO 95% CI for Median: 0.154 – 0.198 (log), 1.167 – 1.218 USD/kg
+[2025-07-28 18:38:06] INFO 95% CI for Mode: 0.154 – 0.198 (log), 1.167 – 1.218 USD/kg
+[2025-07-28 18:38:06] INFO 95% CI for Variance: 0.421 – 0.476
+[2025-07-28 18:38:06] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/l) completed in 9.92 seconds.
+[2025-07-28 18:38:06] INFO 🚀 Unimodal fit plotting (HS 220300, 2010, M, USD/l)
+[2025-07-28 18:38:07] INFO ✅ Unimodal fit plotting (HS 220300, 2010, M, USD/l) completed in 0.34 seconds.
+[2025-07-28 18:38:07] INFO ✅ Saved final report to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\reports\report_220300_2010_m.parquet

@@ -1,5 +1,4 @@
 import logging
-import time
 from colorlog import ColoredFormatter
 import os
 from datetime import datetime
@@ -51,22 +50,3 @@ def logger_setup(name="trade_logger", level=logging.INFO, log_to_file=True,
             print(f"[INFO] Log file created: {log_path}")
 
     return logger
-
-def logger_time(step_name: str, start_time: float, logger=None):
-    """
-    Log the elapsed time for a given step.
-
-    If logger is provided, logs to file and console.
-    Otherwise, falls back to print().
-    """
-    elapsed = time.time() - start_time
-    if elapsed < 60:
-        msg = f"✅ {step_name} completed in {elapsed:.2f} seconds."
-    else:
-        mins, secs = divmod(elapsed, 60)
-        msg = f"✅ {step_name} completed in {int(mins)} min {secs:.1f} sec."
-
-    if logger:
-        logger.info(msg)
-    else:
-        print(msg)

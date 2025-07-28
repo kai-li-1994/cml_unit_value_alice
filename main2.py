@@ -27,7 +27,7 @@ from uv_visualization import plot_histogram, plot_dist
 
 # subscription_key = "4a624b220f67400c9a6ef19b1890f1f9"
 # path = 'C:/Users/lik6/Data/ComtradeTariffline/merge/split_by_hs_2023_numpy'
-#code = "010410"
+#code = "220300"
 #year = "2010"
 #flow = "m"
 
@@ -56,99 +56,76 @@ def cmltrade_uv(code, year, flow):
         plot =True, save_path=True, file_format="pdf")
     
     # === Non-kg-based UV (if exists) ===
-    df_q_filtered, df_q_outliers, report_q_outlier, is_valid_for_fit_q = detect_outliers2(
-        df_q,"ln_uv_q",code,year,flow,logger,unit_label=non_kg_unit,
-        plot =True, save_path=True, file_format="pdf")
+    if non_kg_unit != 'USD/kg':
+        df_q_filtered, df_q_outliers, report_q_outlier, is_valid_for_fit_q = detect_outliers2(
+            df_q,"ln_uv_q",code,year,flow,logger,unit_label=non_kg_unit,
+            plot =True, save_path=True, file_format="pdf")
     
-    if not is_valid_for_fit and not is_valid_for_fit_q:
+    
+    if not is_valid_for_fit and non_kg_unit == 'USD/kg' or not is_valid_for_fit and not is_valid_for_fit_q:
         logger.warning("❌ Skipping both kg-based and non-kg-based analysis due to insufficient sample size.")
        
-        if isinstance(report_q_outlier, dict):
+        if non_kg_unit != 'USD/kg':
             report_q_outlier = prefix_dict_keys(report_q_outlier, prefix="q_")
 
         report_final = {}
-        if isinstance(report_clean, dict):
-            report_final.update(report_clean)
-        if isinstance(report_outlier, dict):
-            report_final.update(report_outlier)
-
-        if non_kg_unit != 'USD/kg' and isinstance(report_q_clean, dict):
-            report_final.update(report_q_clean)
+        report_final.update(report_clean)
+        report_final.update(report_outlier)
+        report_final.update(report_q_clean)
+        if non_kg_unit != 'USD/kg':
             report_final.update(report_q_outlier)
-
+        
         report_final["skip_reason"] = "Too few kg-based and non-kg-based records"
         
         save_report_dict(report_final, code, year, flow, config, logger)
 
         return report_final
-    
-    logger_time("Completed outlier detection", start_time, logger)
 
-    # %% Step 3: Histogram
-    logger.info(f"Histogram (HS {code}, {year}, {flow.upper()})")
-    start_time = time.time()
-    
+    # %% Step 3: Histogram 
     # === Kg-based UV ===
-    if non_kg_unit == 'USD/kg':
-        plot_histogram(df_filtered["ln_uv"],code,year,flow, unit_label="USD/kg",save_path=True, file_format="pdf")
+    if is_valid_for_fit:
+        plot_histogram(df_filtered["ln_uv"],code,year,flow,logger, 
+                   unit_label="USD/kg",save_path=True, file_format="pdf")
     
     # === Non-kg-based UV (if exists) ===
-    if non_kg_unit != 'USD/kg' and df_q is not None and not df_q.empty:
-        plot_histogram(df_q_filtered["ln_uv_q"],code,year,flow,
+    if non_kg_unit != 'USD/kg' and is_valid_for_fit_q:
+        plot_histogram(df_q_filtered["ln_uv_q"],code,year,flow, logger,
                        unit_label=non_kg_unit,save_path=True, file_format="pdf")
-        
-    logger_time("Completed histogram", start_time, logger)
     # %% Step 4: Modality test
-    logger.info(f"Modality Test (HS {code}, {year}, {flow.upper()})")
-    print("Running modality test on unit values...")
-    start_time = time.time()
-
     # === Kg-based UV ===
-    if non_kg_unit == 'USD/kg':
+    if is_valid_for_fit:
         report_modality, modality_decision, is_borderline = modality_test(
-        df_filtered,logger=logger)
+                 df_filtered,code, year, flow, logger, unit_label ="USD/kg")
 
     # === Non-kg-based UV (if exists) ===
-    if non_kg_unit != 'USD/kg'  and df_q is not None and not df_q.empty:
+    if non_kg_unit != 'USD/kg' and is_valid_for_fit_q:
         report_q_modality, modality_q_decision, is_q_borderline = modality_test(
-            df_q_filtered,col="ln_uv_q",logger=logger)
-
+        df_q_filtered,code, year, flow, logger, 
+        unit_label=non_kg_unit, col="ln_uv_q")
     else:
         modality_q_decision = "unknown"
         is_q_borderline = False
-
-    logger_time("Completed modality test", start_time, logger)
     # %% Step 5: Distribution fit
     # %%% Kg-based UV
-    if non_kg_unit == 'USD/kg' :
+    if is_valid_for_fit :
         if modality_decision == "unimodal" or is_borderline:
             
             # === Fitting Unimodal distribution of kg-based UV ====
-            logger.info(f"Fitting Unimodal distribution of kg-based UV ({year}, {flow.upper()})")
-            start_time = time.time()
-            
             (best_fit_name, report_best_fit_uni, report_all_uni_fit, raw_params_dict,
-            ) = fit_all_unimodal_models(df_filtered["ln_uv"], logger=logger)
+            ) = fit_all_unimodal_models(df_filtered["ln_uv"], code, year, 
+                                        flow, logger, unit_label="USD/kg")
             
-            logger.info(f"- {best_fit_name.capitalize()} distribution fits best based on AIC and BIC.")
-            logger_time("Completed unimodal distribution fit (kg-based)", start_time, logger)
-
-            # === Bootstrapping CI (kg-based) ====
-            start_time = time.time()
-            logger.info(f"Bootstrapping CI (kg-based) ({year}, {flow.upper()})")
-            
+            # === Bootstrapping CI (kg-based) ==== 
             report_ci_uni = bootstrap_parametric_ci(
-                df_filtered["ln_uv"], dist=best_fit_name, n_bootstraps=1000
+                df_filtered["ln_uv"], code, year, flow, logger, 
+                unit_label="USD/kg", dist=best_fit_name, n_bootstraps=1000
             )
-            
-            logger_time("Completed ootstrapping CI (kg-based)", start_time, logger)
 
             # === Plotting unimodal distribution fit of kg-based UV ====
-            logger.info(f"Plotting unimodal distribution fit of kg-based UV ({year}, {flow.upper()}))")
-            start_time = time.time()
             
             plot_dist(
-                df_filtered["ln_uv"],code,year,flow,unit_label="USD/kg",
+                df_filtered["ln_uv"],code,year,flow, logger, 
+                unit_label="USD/kg",
                 dist=None,
                 best_fit_name=best_fit_name,
                 report_best_fit_uni=report_best_fit_uni,
@@ -160,90 +137,65 @@ def cmltrade_uv(code, year, flow):
                 file_format="pdf"
             )
             
-            logger_time("Completed unimodal distribution fit plot for kg-based UV", start_time, logger)
-            
             if is_borderline:
-                
                 # === Also fitting GMM on kg-based UV if borderline ===
-                logger.info("⚠️ Borderline modality: Also fitting GMM on kg-based UV")
-                start_time = time.time()
-                
                 optimal_k, bic_values, report_gmmf_1d = find_gmm_components(
-                    df_filtered[["ln_uv"]], code, year, flow, "USD/kg", plot=True, save_path=True
-                )
+                    df_filtered[["ln_uv"]], code, year, flow, logger, 
+                    unit_label="USD/kg", plot=True, save_path=True)
                 
                 report_gmm_1d = fit_gmm(
                     df_filtered,
                     ["ln_uv"],
                     optimal_k,
-                    code,
-                    year,
-                    flow,
+                    code, year, flow, logger, 
+                    unit_label="USD/kg",
                     plot=True,
                     save_path=True,
                     n_init=10,
                     reg_covar=1e-3,
-                    unit_label="USD/kg",
                 )
                 
-                logger_time("Completed GMM fit on kg-based UV (borderline)", start_time, logger)
-        else:
-            logger.info("Fitting GMM on kg-based UV")
-            start_time = time.time()
-            
+        else:   
             optimal_k, bic_values, report_gmmf_1d = find_gmm_components(
-                df_filtered[["ln_uv"]], code, year, flow, "USD/kg", plot=True, save_path=True
+                df_filtered[["ln_uv"]], code, year, flow, logger,
+                plot=True, save_path=True
             )
             
             report_gmm_1d = fit_gmm(
                 df_filtered,
                 ["ln_uv"],
                 optimal_k,
-                code,
-                year,
-                flow,
+                code, year, flow, logger, 
+                unit_label="USD/kg",
                 plot=True,
                 save_path=True,
                 n_init=10,
                 reg_covar=1e-3,
-                unit_label="USD/kg",
             )
-            
-            logger_time("Completed GMM fit on kg-based UV", start_time, logger)
     # %%% Non-kg-based UV
     if non_kg_unit != 'USD/kg'  and df_q is not None and not df_q.empty:
         if modality_q_decision == "unimodal" or is_q_borderline:
             
             # === Fitting Unimodal distribution of non-kg-based UV ====
-            logger.info(f"Fitting Unimodal distribution of non-kg-based UV ({year}, {flow.upper()})")
-            start_time = time.time()
             (best_fit_name_q,
                 report_q_best_fit_uni,
                 report_q_all_uni_fit,
                 raw_params_dict_q,
-            ) = fit_all_unimodal_models(df_q_filtered["ln_uv_q"], logger=logger)
+            ) = fit_all_unimodal_models(df_q_filtered["ln_uv_q"], code, year, 
+                                        flow, logger, unit_label=non_kg_unit)
             
-    
-            logger.info(f"- {best_fit_name_q.capitalize()} distribution fits best based on AIC and BIC.")
-            logger_time("Completed unimodal distribution fit (non-kg-based)", start_time, logger)
-            
-            # === Bootstrapping CI (non-kg-based) ====
-            start_time = time.time()
-            logger.info(f"Bootstrapping CI (non-kg-based) ({year}, {flow.upper()})")
-            
+            # === Bootstrapping CI (non-kg-based) ====    
             report_q_ci_uni = bootstrap_parametric_ci(
-                df_q_filtered["ln_uv_q"], dist=best_fit_name_q, n_bootstraps=1000
-            )
+                df_q_filtered["ln_uv_q"], code, year, flow, logger, 
+                unit_label=non_kg_unit, dist=best_fit_name_q, n_bootstraps=1000)
             
-            logger_time("Completed bootstrapping CI (non-kg-based)", start_time, logger)
             # === Plotting unimodal distribution fit of non-kg-based UV ====
-            logger.info(f"Plotting unimodal distribution fit of non-kg-based UV ({year}, {flow.upper()}))")
-            start_time = time.time()
             plot_dist(
                 df_q_filtered["ln_uv_q"],
                 code,
                 year,
                 flow,
+                logger,
                 unit_label=non_kg_unit,
                 dist=None,
                 best_fit_name=best_fit_name_q,
@@ -253,19 +205,13 @@ def cmltrade_uv(code, year, flow):
                 ci=report_q_ci_uni,
                 save_path=True,
                 ax=None,
-                file_format="pdf"
-            )
-            
-            logger_time("Completed unimodal distribution fit plot for non-kg-based UV", start_time, logger)
+                file_format="pdf")
                 
             if is_q_borderline:
-                
                 # === Also fitting GMM on non-kg-based UV if borderline ===
-                logger.info("⚠️ Borderline modality: Also fitting GMM on non-kg-based UV")
-                start_time = time.time()
-                
                 optimal_k_q, bic_values_q, report_q_gmmf_1d = find_gmm_components(
-                    df_q_filtered[["ln_uv_q"]], code, year, flow, non_kg_unit, plot=True, save_path=True
+                    df_q_filtered[["ln_uv_q"]], code, year, flow, logger, 
+                    unit_label=non_kg_unit, plot=True, save_path=True
                 )
                
                 report_q_gmm_1d = fit_gmm(
@@ -275,21 +221,17 @@ def cmltrade_uv(code, year, flow):
                     code,
                     year,
                     flow,
+                    logger, 
+                    unit_label=non_kg_unit,
                     plot=True,
                     save_path=True,
                     n_init=10,
-                    reg_covar=1e-3,
-                    unit_label=non_kg_unit,
-                )
+                    reg_covar=1e-3)
 
-                logger_time("Completed GMM fit on non-kg-based UV (borderline)", start_time, logger)
-        else:
-            logger.info("Fitting GMM on non-kg-based UV")
-            start_time = time.time()
-            
+        else: 
             optimal_k_q, bic_values_q, report_q_gmmf_1d = find_gmm_components(
-                df_q_filtered[["ln_uv_q"]], code, year, flow, non_kg_unit, plot=True, save_path=True
-            )
+                df_q_filtered[["ln_uv_q"]], code, year, flow, logger, 
+                unit_labe=non_kg_unit, plot=True, save_path=True)
             
             report_q_gmm_1d = fit_gmm(
                 df_q_filtered,
@@ -298,14 +240,13 @@ def cmltrade_uv(code, year, flow):
                 code,
                 year,
                 flow,
+                logger,
+                unit_label=non_kg_unit,
                 plot=True,
                 save_path=True,
                 n_init=10,
-                reg_covar=1e-3,
-                unit_label=non_kg_unit,
-            )
-           
-            logger_time("Completed GMM fit on non-kg-based UV", start_time, logger)
+                reg_covar=1e-3)
+            
     # %% Step 6: Return final report
     
     report_final = {}

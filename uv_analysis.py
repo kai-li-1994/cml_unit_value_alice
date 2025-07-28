@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import pandas as pd
 from scipy.stats import (
@@ -11,59 +12,34 @@ from scipy.stats import (
 from scipy.optimize import minimize_scalar
 from matplotlib import colormaps
 import matplotlib.pyplot as plt
-from sklearn.neighbors import KernelDensity
-from scipy.signal import find_peaks
 import subprocess
 from io import StringIO
 from uv_config import load_config
 import os
 from sklearn.mixture import GaussianMixture
 from matplotlib.lines import Line2D
-
 config = load_config()
 
-def bootstrapped_kde_test(data, num_bootstrap=1000):
-    bandwidth = 0.9 * np.std(data) * len(data) ** (-1 / 5)
-    data = np.asarray(data)  # Ensures data is a numpy array
-    kde = KernelDensity(kernel="gaussian", bandwidth=bandwidth).fit(
-        data.reshape(-1, 1)
-    )
 
-    x_grid = np.linspace(data.min(), data.max(), 1000)
-    density = np.exp(kde.score_samples(x_grid[:, None]))
-    real_peaks, _ = find_peaks(density)
-    real_peak_count = len(real_peaks)
-
-    bootstrap_peak_counts = []
-    for _ in range(num_bootstrap):
-        bootstrap_sample = np.random.normal(
-            np.mean(data), np.std(data), size=len(data)
-        )
-        kde_bootstrap = KernelDensity(
-            kernel="gaussian", bandwidth=bandwidth
-        ).fit(bootstrap_sample[:, None])
-        density_bootstrap = np.exp(
-            kde_bootstrap.score_samples(x_grid[:, None])
-        )
-        peaks_bootstrap, _ = find_peaks(density_bootstrap)
-        bootstrap_peak_counts.append(len(peaks_bootstrap))
-
-    p_value = np.mean(np.array(bootstrap_peak_counts) >= real_peak_count)
-
-    return real_peak_count, p_value, bootstrap_peak_counts
-
-def modality_test(df, r_script_path="uv_modality_test.R", mod0=1, col="ln_uv", methods=["SI", "HH"], cap_size=50000, logger=None):
+def modality_test(df, code, year, flow, logger, unit_label,  
+                  r_script_path="uv_modality_test.R", mod0=1, 
+                  col="ln_uv", methods=["SI", "HH"], cap_size=50000):
     """
     Run R-based modality tests (Silverman and Hartigan's Dip) on a univariate column.
 
-    This function runs the specified modality tests using an R script on a numeric column of a pandas DataFrame.
-    It supports capping sample size for bootstrapped tests (like Silverman's) to improve computational efficiency.
+    This function runs the specified modality tests using an R script on a 
+    numeric column of a pandas DataFrame.
+    It supports capping sample size for bootstrapped tests (like Silverman's) 
+    to improve computational efficiency.
 
     The current implementation is designed to:
     - Use only two methods: "SI" (Silverman) and "HH" (Hartigan's Dip)
-    - Return a conservative decision: only if both reject unimodality is the data labeled "multimodal"
-    - Label cases where one rejects and the other fails as "borderline" but conservatively mark them as "unimodal"
-    - Return "unknown" if either SI or HH fails to compute (e.g. missing p-values)
+    - Return a conservative decision: only if both reject unimodality is the 
+      data labeled "multimodal"
+    - Label cases where one rejects and the other fails as "borderline" but 
+      conservatively mark them as "unimodal"
+    - Return "unknown" if either SI or HH fails to compute 
+      (e.g. missing p-values)
 
     Parameters:
         df : pandas.DataFrame
@@ -77,18 +53,26 @@ def modality_test(df, r_script_path="uv_modality_test.R", mod0=1, col="ln_uv", m
         methods : list of str, optional
             List of modality test methods to run. Default is ["SI", "HH"].
         cap_size : int, optional (default = 50000)
-            Maximum number of observations used for bootstrapped or kernel-based tests to save time.
+            Maximum number of observations used for bootstrapped or 
+            kernel-based tests to save time.
         logger : logger object
             Optional logger to log diagnostic information and summary.
 
     Returns:
         report_modality : dict
-            Dictionary containing all test results, p-values, decision flags, and sample metadata.
+            Dictionary containing all test results, p-values, decision flags, 
+            and sample metadata.
         final_decision : str
-            One of {"unimodal", "multimodal", "unknown"}. Conservative fallback if input is invalid.
+            One of {"unimodal", "multimodal", "unknown"}. Conservative fallback
+            if input is invalid.
         is_borderline : bool
-            True if exactly one of SI/HH rejects unimodality (i.e. borderline case).
+       True if exactly one of SI/HH rejects unimodality (i.e. borderline case).
     """
+    logger.info(f"🚀 Modality test (HS {code}, {year}, {flow.upper()}, " 
+                f"{unit_label})")
+    start_time = time.time()
+    print("Running modality test on unit values...")
+    
     full_df = df[col].dropna()
     original_n = len(full_df)
 
@@ -120,11 +104,14 @@ def modality_test(df, r_script_path="uv_modality_test.R", mod0=1, col="ln_uv", m
         pvals_df = pd.read_csv(StringIO(process.stdout))
 
         reject = pvals_df["P_Value"] < 0.05
-        pvals_df["Decision"] = reject.map(lambda x: "reject" if x else "fail to reject")
+        pvals_df["Decision"] = reject.map(
+                          lambda x: "reject" if x else "fail to reject")
         n_reject = reject.sum()
 
-        si_p = pvals_df.loc[pvals_df["Method"] == "SI", "P_Value"].values[0] if "SI" in pvals_df["Method"].values else None
-        hh_p = pvals_df.loc[pvals_df["Method"] == "HH", "P_Value"].values[0] if "HH" in pvals_df["Method"].values else None
+        si_p = pvals_df.loc[pvals_df["Method"] == "SI", "P_Value"
+                ].values[0] if "SI" in pvals_df["Method"].values else None
+        hh_p = pvals_df.loc[pvals_df["Method"] == "HH", "P_Value"
+                ].values[0] if "HH" in pvals_df["Method"].values else None
 
         if si_p is not None and hh_p is not None:
             if si_p < 0.05 and hh_p < 0.05:
@@ -143,7 +130,7 @@ def modality_test(df, r_script_path="uv_modality_test.R", mod0=1, col="ln_uv", m
         report_modality = {
             "t_method": "SI+HH",
             "t_modality_decision": final_decision,
-            "t_modality_votes": n_reject,
+            "t_modality_votes": int(n_reject),
             "t_sample_capped": was_capped,
             "t_sample_used": len(sampled),
             "t_sample_original": original_n,
@@ -156,7 +143,7 @@ def modality_test(df, r_script_path="uv_modality_test.R", mod0=1, col="ln_uv", m
             report_modality[f"t_{method_name}_decision"] = row["Decision"]
 
         if logger:
-            logger.info("📈 Modality Test Summary:")
+            logger.info("📈 Modality test summary:")
             logger.info(f"- Column tested: {col}")
             logger.info(f"- Original sample size: {original_n}")
             if was_capped:
@@ -168,13 +155,20 @@ def modality_test(df, r_script_path="uv_modality_test.R", mod0=1, col="ln_uv", m
                 logger.warning("⚠️ Modality unknown: SI or HH test missing.")
             elif is_borderline:
                 logger.warning("⚠️ Borderline modality test result: SI and HH disagree.")
-
+        
+        elapsed = time.time() - start_time    
+        logger.info(f"✅ Modality test (HS {code}, {year}, {flow.upper()}, "
+                    f"{unit_label}) completed in {elapsed:.2f} seconds.")
         return report_modality, final_decision, is_borderline
 
     except subprocess.CalledProcessError as e:
         if logger:
             logger.error("❌ R script for modality test failed.")
             logger.error(f"STDERR:\n{e.stderr}")
+            
+        elapsed = time.time() - start_time    
+        logger.info(f"✅ Modality test (HS {code}, {year}, {flow.upper()}, "
+                    f"{unit_label}) completed in {elapsed:.2f} seconds.")
         return {
             "t_name": "modality_test",
             "t_modality_error": str(e),
@@ -183,122 +177,6 @@ def modality_test(df, r_script_path="uv_modality_test.R", mod0=1, col="ln_uv", m
             "t_sample_used": len(sampled),
             "t_sample_original": original_n
         }, "error", False
-    
-def modality_test2(df, r_script_path="uv_modality_test2.R", mod0=1, col="ln_uv", methods=None, cap_size=25000, logger = None):
-    """
-    Run R-based modality tests on a univariate column from a pandas DataFrame.
-
-    Parameters:
-        df : pandas.DataFrame
-            The input data containing the column to test.
-        r_script_path : str
-            Path to the R script that runs the modality test.
-        mod0 : int
-            Null hypothesis: number of modes to test against.
-        col : str
-            Column name in the DataFrame to test.
-        methods : list of str, optional
-            List of modality test methods to run (e.g. ["ACR", "SI"]).
-            If None, defaults to all available methods in the R script.
-        cap_size : int, optional (default = 25000)
-            Maximum number of observations used as input when running 
-            bootstrapped or kernel-based modality tests.
-            This cap improves computational efficiency for large datasets 
-            (e.g., those exceeding 100,000 records) while preserving enough 
-            statistical resolution for reliable modality classification.
-
-    Returns:
-        dict : A summary dictionary with modality test results, including p-values,
-               decisions for each method, and the overall modality decision.
-    """
-    full_df = df[col].dropna()
-    original_n = len(full_df)
-    
-    if original_n == 0:
-        logger.warning(f"⚠️ No valid data in column '{col}' for modality test.")
-        return {
-            "step_3_name": "test_modality",
-            "t_modality_votes": 0,
-            "t_sample_capped": False,
-            "t_sample_used": 0,
-            "t_sample_original": 0
-        }, None
-
-    # Decide if capping is needed
-    boot_methods = {"SI", "HY", "CH", "ACR"}
-    cap_needed = methods is None or any(m in boot_methods for m in methods)
-    
-    if cap_needed and original_n > cap_size:
-        sampled = full_df.sample(cap_size, random_state=42)
-        was_capped = True
-    else:
-        sampled = full_df
-        was_capped = False
-
-    values = sampled.to_numpy()
-    csv_data = "\n".join(f"{v}" for v in values)
-
-    # Compose command
-    cmd = [config["rscript_exec"], r_script_path, str(mod0)]
-    if methods:
-        cmd += methods
-
-    try:
-        process = subprocess.run(
-            cmd,
-            input=csv_data,
-            text=True,
-            capture_output=True,
-            check=True
-        )
-        pvals_df = pd.read_csv(StringIO(process.stdout))
-
-        # Decision logic
-        reject = pvals_df["P_Value"] < 0.05
-        pvals_df["Decision"] = reject.map(lambda x: "reject" if x else "fail to reject")
-        n_reject = reject.sum()
-        final_decision = "multimodal" if n_reject >= (len(pvals_df) // 2 + 1) else "unimodal"
-
-        # Summary report
-        report_modality = {
-            "t_name": "modality_test",
-            "t_method": "majority",
-            "t_modality_decision": final_decision,
-            "t_modality_votes": n_reject,
-            "t_sample_capped": was_capped,
-            "t_sample_used": len(sampled),
-            "t_sample_original": original_n
-        }
-
-        for _, row in pvals_df.iterrows():
-            method_name = row["Method"]
-            report_modality[f"t_{method_name}_P"] = row["P_Value"]
-            report_modality[f"t_{method_name}_decision"] = row["Decision"]
-
-        logger.info("📈 Modality Test Summary:")
-        logger.info(f"- Column tested: {col}")
-        logger.info(f"- Original sample size: {original_n}")
-        if was_capped:
-            logger.warning(f"❗ Sample capped at {cap_size} for efficiency.")
-        else:
-            logger.info("✅ Full sample used (no capping applied).")
-        logger.info(f"- Final decision: {final_decision} ({n_reject} reject out of {len(pvals_df)})")
-
-        return report_modality, report_modality["t_modality_decision"]
-
-    except subprocess.CalledProcessError as e:
-        logger.error("❌ R script for modality test failed.")
-        logger.error(f"STDERR:\n{e.stderr}")
-        report_modality = {
-            "t_name": "modality_test",
-            "t_modality_error": str(e),
-            "t_modality_decision": "error",
-            "t_sample_capped": was_capped,
-            "t_sample_used": len(sampled),
-            "t_sample_original": original_n
-        }
-        
-        return report_modality, "error"
     
 def _estimate_mode(dist, args, data):
     """Estimate mode as the peak of the PDF over the data range."""
@@ -368,7 +246,7 @@ def _fit_distribution(dist_obj, data, logger=None):
 
     return dist_name, result, params  # Note: returning raw params separately
 
-def fit_all_unimodal_models(data, logger=None):
+def fit_all_unimodal_models(data, code, year, flow, logger, unit_label="USD/kg"):
     """
     Fit all candidate unimodal distributions and select the best one based on AIC and BIC.
 
@@ -379,7 +257,8 @@ def fit_all_unimodal_models(data, logger=None):
     Returns:
         tuple: (best_fit_name, report_best_fit_uni, report_all_uni_fit, raw_params_dict)
     """
-    from scipy.stats import norm, skewnorm, t, gennorm, johnsonsu, logistic
+    logger.info(f"🚀 Fitting unimodal distribution (HS {code}, {year}, {flow.upper()}, {unit_label})")
+    start_time = time.time()
     model_objs = [norm, skewnorm, t, gennorm, johnsonsu, logistic]
 
     report_all_uni_fit = {}
@@ -399,13 +278,17 @@ def fit_all_unimodal_models(data, logger=None):
 
     report_all_uni_fit["best_fit_name"] = best_fit_name
 
-    if logger:
-        logger.info(f"Best fit based on AIC/BIC: {best_fit_name.capitalize()}")
-
+    logger.info(f"Best fit based on AIC/BIC: {best_fit_name.capitalize()}")
+        
+    elapsed = time.time() - start_time    
+    logger.info(f"✅ Unimodal distribution fit (HS {code}, {year}, {flow.upper()}, "
+                f"{unit_label}) completed in {elapsed:.2f} seconds.")
+    
     return best_fit_name, report_best_fit_uni, report_all_uni_fit, raw_params_dict
 
 def bootstrap_parametric_ci(
-    data, dist="skewnorm", n_bootstraps=1000, confidence=0.95, logger=None
+    data, code, year, flow, logger, unit_label="USD/kg",dist="skewnorm", 
+    n_bootstraps=1000, confidence=0.95
 ):
     """
     Bootstrap confidence intervals for mean, median, mode, and variance
@@ -421,6 +304,8 @@ def bootstrap_parametric_ci(
     Returns:
         tuple: CI for mean, median, mode, and variance.
     """
+    logger.info(f"🚀 Bootstrapping CI (HS {code}, {year}, {flow.upper()}, {unit_label})")
+    start_time = time.time()
     n = len(data)
     alpha = 1 - confidence
     boot_means, boot_medians, boot_modes, boot_vars = [], [], [], []
@@ -471,7 +356,7 @@ def bootstrap_parametric_ci(
         boot_medians.append(median)
         boot_modes.append(mode)
         boot_vars.append(var)
-
+        
     # === CI Computation ===
     def _ci_bounds(arr):
         return (
@@ -483,13 +368,16 @@ def bootstrap_parametric_ci(
     ci_median = _ci_bounds(boot_medians)
     ci_mode = _ci_bounds(boot_modes)
     ci_var = _ci_bounds(boot_vars)
-
-    if logger:
-        logger.info(f"{confidence:.0%} CI for Mean: {ci_mean[0]:.3f} – {ci_mean[1]:.3f} (log), {np.exp(ci_mean[0]):.3f} – {np.exp(ci_mean[1]):.3f} USD/kg")
-        logger.info(f"{confidence:.0%} CI for Median: {ci_median[0]:.3f} – {ci_median[1]:.3f} (log), {np.exp(ci_median[0]):.3f} – {np.exp(ci_median[1]):.3f} USD/kg")
-        logger.info(f"{confidence:.0%} CI for Mode: {ci_mode[0]:.3f} – {ci_mode[1]:.3f} (log), {np.exp(ci_mode[0]):.3f} – {np.exp(ci_mode[1]):.3f} USD/kg")
-        logger.info(f"{confidence:.0%} CI for Variance: {ci_var[0]:.3f} – {ci_var[1]:.3f}")
-
+    
+    logger.info(f"{confidence:.0%} CI for Mean: {ci_mean[0]:.3f} – {ci_mean[1]:.3f} (log), {np.exp(ci_mean[0]):.3f} – {np.exp(ci_mean[1]):.3f} USD/kg")
+    logger.info(f"{confidence:.0%} CI for Median: {ci_median[0]:.3f} – {ci_median[1]:.3f} (log), {np.exp(ci_median[0]):.3f} – {np.exp(ci_median[1]):.3f} USD/kg")
+    logger.info(f"{confidence:.0%} CI for Mode: {ci_mode[0]:.3f} – {ci_mode[1]:.3f} (log), {np.exp(ci_mode[0]):.3f} – {np.exp(ci_mode[1]):.3f} USD/kg")
+    logger.info(f"{confidence:.0%} CI for Variance: {ci_var[0]:.3f} – {ci_var[1]:.3f}")
+    
+    elapsed = time.time() - start_time    
+    logger.info(f"✅ CI bootstrapping (HS {code}, {year}, {flow.upper()}, "
+                f"{unit_label}) completed in {elapsed:.2f} seconds.")
+    
     return {
     "ci_mean_lower": ci_mean[0],
     "ci_mean_upper": ci_mean[1],
@@ -506,6 +394,7 @@ def find_gmm_components(
     code,
     year,
     flow,
+    logger,
     unit_label="USD/kg",
     max_components=50,
     convergence_threshold=5,
@@ -576,6 +465,9 @@ def find_gmm_components(
         report : dict
             Diagnostic info and selection metadata.
     """
+    logger.info(f"🚀 GMM component number selecting (HS {code}, {year}, {flow.upper()}, {unit_label})")
+    start_time = time.time()
+    
     # Convert to numpy array if it's a DataFrame
     if hasattr(data, "to_numpy"):
         data = data.to_numpy()
@@ -693,6 +585,10 @@ def find_gmm_components(
         "cs_n_init": n_init,
         "cs_reg_covar": reg_covar
     }
+    
+    elapsed = time.time() - start_time
+    logger.info(f"✅ GMM component number selecting (HS {code}, {year}, "
+            f"{flow.upper()}, {unit_label}) completed in {elapsed} seconds.")
 
     return optimal_k, bic_values.tolist(), report_gmm_cselect
 
@@ -703,12 +599,13 @@ def fit_gmm(
     code,
     year,
     flow,
+    logger,
+    unit_label="USD/kg",
     plot=True,
     save_path=None,
     ax=None,
     n_init=10,
     reg_covar = 1e-3,
-    unit_label="USD/kg",
 ):
     """
     Fits a Gaussian Mixture Model (GMM) to log unit value data, computes
@@ -728,6 +625,9 @@ def fit_gmm(
     Returns:
     - Dictionary with GMM statistics and metadata.
     """
+    logger.info(f"🚀 GMM fit (HS {code}, {year}, {flow.upper()}, {unit_label})")
+    start_time = time.time()
+    
     # === Data Extraction ===
     if len(columns) != 1:
         raise ValueError(f"Expected exactly one column for 1D GMM, but got {len(columns)}: {columns}")
@@ -892,7 +792,11 @@ def fit_gmm(
             top_items = sorted_country_proportions.get(i, [])[:3]
             for j, (country, share) in enumerate(top_items):
                 gmm_1d_report[f"gmm_c{i+1}_country{j+1}"] = f"{country} ({round(share * 100, 2)}%)"
-
+               
+    elapsed = time.time() - start_time
+    logger.info(f"✅ GMM fit (HS {code}, {year}, "
+            f"{flow.upper()}, {unit_label}) completed in {elapsed} seconds.")
+    
     return gmm_1d_report
 
 
