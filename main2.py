@@ -3,18 +3,16 @@ UVPicker - Unit Value Analysis Tool
 Copyright (c) 2025 Kai Li
 Licensed under LGPL v3.0 – See LICENSE file for details.
 Funding Acknowledgment:
-- European Horizon Project (No. 101060142) "RESOURCE – REgional project development aSsistance fOr the Uptake of an aRagonese Circular Economy"
-- Financial support from CML, Leiden University, for full access to the UN Comtrade database
-07/17/2025
+- European Horizon Project (No. 101060142) "RESOURCE – REgional project 
+  development aSsistance fOr the Uptake of an aRagonese Circular Economy"
+- Financial support from CML, Leiden University, for full access to the 
+  UN Comtrade database 
+29/07/2025
 """
-
 import time
-from uv_logger import logger_setup, logger_time
-
+from uv_logger import logger_setup
 from uv_config import load_config, prefix_dict_keys, save_report_dict
-
-from uv_preparation import clean_trade2, detect_outliers2
-
+from uv_preparation import clean_trade, detect_outliers
 from uv_analysis import (
     modality_test,
     fit_all_unimodal_models,
@@ -22,7 +20,6 @@ from uv_analysis import (
     find_gmm_components,
     fit_gmm,
 )
-
 from uv_visualization import plot_histogram, plot_dist
 
 # subscription_key = "4a624b220f67400c9a6ef19b1890f1f9"
@@ -30,7 +27,6 @@ from uv_visualization import plot_histogram, plot_dist
 #code = "220300"
 #year = "2010"
 #flow = "m"
-
 
 def cmltrade_uv(code, year, flow):
     
@@ -45,25 +41,26 @@ def cmltrade_uv(code, year, flow):
     print(f"Starting analysis for HS code {code} in year {year}...\n")
     # %% Step 1: Clean trade data
  
-    (df_uv, df_q, report_clean, report_q_clean, non_kg_unit) = clean_trade2(
+    (df_uv, df_q, report_clean, report_q_clean, non_kg_unit) = clean_trade(
         code, year, flow, config, logger)
  
     # %% Step 2: Detect outliers
-      
     # === Kg-based UV ===
-    df_filtered, df_outliers, report_outlier, is_valid_for_fit = detect_outliers2(
-        df_uv, "ln_uv", code, year, flow, logger, unit_label="USD/kg", 
+    df_filtered, df_outliers, report_outlier, is_valid_for_fit = detect_outliers(
+        df_uv, "ln_uv", code, year, flow, config, logger, unit_label="USD/kg", 
         plot =True, save_path=True, file_format="pdf")
     
     # === Non-kg-based UV (if exists) ===
     if non_kg_unit != 'USD/kg':
-        df_q_filtered, df_q_outliers, report_q_outlier, is_valid_for_fit_q = detect_outliers2(
-            df_q,"ln_uv_q",code,year,flow,logger,unit_label=non_kg_unit,
-            plot =True, save_path=True, file_format="pdf")
+        df_q_filtered, df_q_outliers, report_q_outlier, is_valid_for_fit_q = \
+        detect_outliers(df_q,"ln_uv_q",code,year,flow, config, logger,
+         unit_label=non_kg_unit, plot =True, save_path=True, file_format="pdf")
     
     
-    if not is_valid_for_fit and non_kg_unit == 'USD/kg' or not is_valid_for_fit and not is_valid_for_fit_q:
-        logger.warning("❌ Skipping both kg-based and non-kg-based analysis due to insufficient sample size.")
+    if not is_valid_for_fit and non_kg_unit == 'USD/kg' or \
+       not is_valid_for_fit and not is_valid_for_fit_q:
+        logger.warning("❌ Skipping both kg-based and non-kg-based analysis "
+                       "due to insufficient sample size.")
        
         if non_kg_unit != 'USD/kg':
             report_q_outlier = prefix_dict_keys(report_q_outlier, prefix="q_")
@@ -78,30 +75,32 @@ def cmltrade_uv(code, year, flow):
         report_final["skip_reason"] = "Too few kg-based and non-kg-based records"
         
         save_report_dict(report_final, code, year, flow, config, logger)
-
+        
+        elapsed = time.time() - zero_time
+        print(f"🟢 cmltrade_uv completed in {elapsed} seconds.")
+        
         return report_final
-
     # %% Step 3: Histogram 
     # === Kg-based UV ===
     if is_valid_for_fit:
-        plot_histogram(df_filtered["ln_uv"],code,year,flow,logger, 
+        plot_histogram(df_filtered["ln_uv"],code,year,flow, config, logger, 
                    unit_label="USD/kg",save_path=True, file_format="pdf")
     
     # === Non-kg-based UV (if exists) ===
     if non_kg_unit != 'USD/kg' and is_valid_for_fit_q:
-        plot_histogram(df_q_filtered["ln_uv_q"],code,year,flow, logger,
+        plot_histogram(df_q_filtered["ln_uv_q"],code,year,flow, config, logger,
                        unit_label=non_kg_unit,save_path=True, file_format="pdf")
     # %% Step 4: Modality test
     # === Kg-based UV ===
     if is_valid_for_fit:
         report_modality, modality_decision, is_borderline = modality_test(
-                 df_filtered,code, year, flow, logger, unit_label ="USD/kg")
+          df_filtered,code, year, flow, config, logger, unit_label ="USD/kg")
 
     # === Non-kg-based UV (if exists) ===
     if non_kg_unit != 'USD/kg' and is_valid_for_fit_q:
-        report_q_modality, modality_q_decision, is_q_borderline = modality_test(
-        df_q_filtered,code, year, flow, logger, 
-        unit_label=non_kg_unit, col="ln_uv_q")
+        report_q_modality, modality_q_decision, is_q_borderline = \
+        modality_test(df_q_filtered,code, year, flow, config, logger, 
+                      unit_label=non_kg_unit, col="ln_uv_q")
     else:
         modality_q_decision = "unknown"
         is_q_borderline = False
@@ -111,18 +110,16 @@ def cmltrade_uv(code, year, flow):
         if modality_decision == "unimodal" or is_borderline:
             
             # === Fitting Unimodal distribution of kg-based UV ====
-            (best_fit_name, report_best_fit_uni, report_all_uni_fit, raw_params_dict,
-            ) = fit_all_unimodal_models(df_filtered["ln_uv"], code, year, 
-                                        flow, logger, unit_label="USD/kg")
+            (best_fit_name, report_best_fit_uni, report_all_uni_fit, 
+             raw_params_dict) = fit_all_unimodal_models(df_filtered["ln_uv"], 
+                    code, year, flow, logger, unit_label="USD/kg")
             
             # === Bootstrapping CI (kg-based) ==== 
             report_ci_uni = bootstrap_parametric_ci(
-                df_filtered["ln_uv"], code, year, flow, logger, 
-                unit_label="USD/kg", dist=best_fit_name, n_bootstraps=1000
-            )
+                df_filtered["ln_uv"], code, year, flow, config, logger, 
+                unit_label="USD/kg", dist=best_fit_name, n_bootstraps=1000)
 
             # === Plotting unimodal distribution fit of kg-based UV ====
-            
             plot_dist(
                 df_filtered["ln_uv"],code,year,flow, logger, 
                 unit_label="USD/kg",
@@ -140,14 +137,14 @@ def cmltrade_uv(code, year, flow):
             if is_borderline:
                 # === Also fitting GMM on kg-based UV if borderline ===
                 optimal_k, bic_values, report_gmmf_1d = find_gmm_components(
-                    df_filtered[["ln_uv"]], code, year, flow, logger, 
+                    df_filtered[["ln_uv"]], code, year, flow, config, logger, 
                     unit_label="USD/kg", plot=True, save_path=True)
                 
                 report_gmm_1d = fit_gmm(
                     df_filtered,
                     ["ln_uv"],
                     optimal_k,
-                    code, year, flow, logger, 
+                    code, year, flow, config, logger, 
                     unit_label="USD/kg",
                     plot=True,
                     save_path=True,
@@ -157,7 +154,7 @@ def cmltrade_uv(code, year, flow):
                 
         else:   
             optimal_k, bic_values, report_gmmf_1d = find_gmm_components(
-                df_filtered[["ln_uv"]], code, year, flow, logger,
+                df_filtered[["ln_uv"]], code, year, flow, config, logger,
                 plot=True, save_path=True
             )
             
@@ -275,6 +272,9 @@ def cmltrade_uv(code, year, flow):
             report_final.update(r_prefixed)
             
     save_report_dict(report_final, code, year, flow, config, logger)
+    
+    elapsed = time.time() - zero_time
+    print(f"🟢 cmltrade_uv completed in {elapsed} seconds.")
           
     return report_final
 # %% 

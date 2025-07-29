@@ -1,0 +1,453 @@
+[2025-07-29 11:33:50] INFO 🚀 Clean trade data (HS 220300, 2010, M)
+[2025-07-29 11:33:50] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_220300_2010.csv
+[2025-07-29 11:33:50] INFO 📈 Cleaning Summary:
+[2025-07-29 11:33:50] INFO  - Initial rows: 37720
+[2025-07-29 11:33:50] INFO  - Valid country filter: 33223 (88.08%)
+[2025-07-29 11:33:50] INFO  - Valid trade value filter: 6340 (16.81%)
+[2025-07-29 11:33:50] INFO  - Valid kg-based UV rows: 4898 (12.99%)
+[2025-07-29 11:33:50] INFO 🧪 Non-kg UV Subset:
+[2025-07-29 11:33:50] INFO  - Top unit: Volume in liters (l)
+[2025-07-29 11:33:50] INFO  - Share of valid top non-kg UV rows: 54.00% (Required: 10%)
+[2025-07-29 11:33:50] INFO  - Valid top non-kg UV count: 3213
+[2025-07-29 11:33:50] INFO ✅ Non-kg UV subset created.
+[2025-07-29 11:33:50] INFO ✅ Trade data cleaning completed in 0.53 seconds.
+[2025-07-29 11:34:10] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 11:34:10] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 281.5 (share = 1.33%) — kept
+[2025-07-29 11:34:10] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 11:34:10] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 11:34:10] INFO - Total rows: 4898
+[2025-07-29 11:34:10] INFO - Z-score outliers: 220
+[2025-07-29 11:34:10] INFO - log(UV) = 0 rows: 65 (share = 1.33%), removed: 0
+[2025-07-29 11:34:10] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 11:34:10] INFO - Remaining rows: 4678
+[2025-07-29 11:34:10] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.58 seconds.
+[2025-07-29 11:34:24] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-29 11:34:24] INFO log(UV)=0 present but no spike: 223 vs. neighbors avg 210.0 (share = 0.00%) — kept
+[2025-07-29 11:34:25] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_l.pdf
+[2025-07-29 11:34:25] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/l):
+[2025-07-29 11:34:25] INFO - Total rows: 3213
+[2025-07-29 11:34:25] INFO - Z-score outliers: 141
+[2025-07-29 11:34:25] INFO - log(UV) = 0 rows: 0 (share = 0.00%), removed: 0
+[2025-07-29 11:34:25] INFO - Total dropped: 141 rows (4.39%)
+[2025-07-29 11:34:25] INFO - Remaining rows: 3072
+[2025-07-29 11:34:25] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/l) completed in 0.24 seconds.
+[2025-07-29 11:43:12] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 11:43:12] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_kg.pdf
+[2025-07-29 11:43:12] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.31 seconds.
+[2025-07-29 11:43:12] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-29 11:43:13] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_l.pdf
+[2025-07-29 11:43:13] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/l) completed in 0.20 seconds.
+[2025-07-29 11:43:15] INFO 🚀 Modality test (HS 220300, 2010, M, USD/kg)
+[2025-07-29 11:43:22] INFO 📈 Modality test summary:
+[2025-07-29 11:43:22] INFO - Column tested: ln_uv
+[2025-07-29 11:43:22] INFO - Original sample size: 4678
+[2025-07-29 11:43:22] INFO ✅ Full sample used.
+[2025-07-29 11:43:22] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-29 11:43:22] INFO ✅ Modality test (HS 220300, 2010, M, USD/kg) completed in 7.17 seconds.
+[2025-07-29 11:43:22] INFO 🚀 Modality test (HS 220300, 2010, M, USD/l)
+[2025-07-29 11:43:29] INFO 📈 Modality test summary:
+[2025-07-29 11:43:29] INFO - Column tested: ln_uv_q
+[2025-07-29 11:43:29] INFO - Original sample size: 3072
+[2025-07-29 11:43:29] INFO ✅ Full sample used.
+[2025-07-29 11:43:29] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-29 11:43:29] INFO ✅ Modality test (HS 220300, 2010, M, USD/l) completed in 7.04 seconds.
+[2025-07-29 15:12:59] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:12:59] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1<5) — kept
+[2025-07-29 15:12:59] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 15:12:59] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 15:12:59] INFO - Total rows: 4898
+[2025-07-29 15:12:59] INFO - Z-score outliers: 220
+[2025-07-29 15:12:59] INFO - log(UV) = 0 rows: 65 (ratio = 1<5), removed: 0
+[2025-07-29 15:12:59] INFO - log(UV) = 0 rows: 65 (ratio = 1), removed: 0
+[2025-07-29 15:12:59] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 15:12:59] INFO - Remaining rows: 4678
+[2025-07-29 15:12:59] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.30 seconds.
+[2025-07-29 15:12:59] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-29 15:12:59] INFO log(UV)=0 present but no spike: 223 vs. neighbors avg 210 (ratio = 1<5) — kept
+[2025-07-29 15:13:00] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_l.pdf
+[2025-07-29 15:13:00] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/l):
+[2025-07-29 15:13:00] INFO - Total rows: 3213
+[2025-07-29 15:13:00] INFO - Z-score outliers: 141
+[2025-07-29 15:13:00] INFO - log(UV) = 0 rows: 0 (ratio = 1<5), removed: 0
+[2025-07-29 15:13:00] INFO - log(UV) = 0 rows: 0 (ratio = 1), removed: 0
+[2025-07-29 15:13:00] INFO - Total dropped: 141 rows (4.39%)
+[2025-07-29 15:13:00] INFO - Remaining rows: 3072
+[2025-07-29 15:13:00] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/l) completed in 0.39 seconds.
+[2025-07-29 15:13:24] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:13:24] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1<5) — kept
+[2025-07-29 15:13:25] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 15:13:25] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 15:13:25] INFO - Total rows: 4898
+[2025-07-29 15:13:25] INFO - Z-score outliers: 220
+[2025-07-29 15:13:25] INFO - log(UV) = 0 rows: 65 (ratio = 1<5), removed: 0
+[2025-07-29 15:13:25] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 15:13:25] INFO - Remaining rows: 4678
+[2025-07-29 15:13:25] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.34 seconds.
+[2025-07-29 15:16:32] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:16:32] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < 5) — kept
+[2025-07-29 15:16:32] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 15:16:32] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 15:16:32] INFO - Total rows: 4898
+[2025-07-29 15:16:32] INFO - Z-score outliers: 220
+[2025-07-29 15:16:32] INFO - log(UV) = 0 rows: 65 (ratio = 1 < 5), removed: 0
+[2025-07-29 15:16:32] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 15:16:32] INFO - Remaining rows: 4678
+[2025-07-29 15:16:32] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.30 seconds.
+[2025-07-29 15:17:42] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:17:42] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < 5) — kept
+[2025-07-29 15:17:42] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 15:17:42] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 15:17:42] INFO - Total rows: 4898
+[2025-07-29 15:17:42] INFO - Z-score outliers: 220
+[2025-07-29 15:17:42] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < 5), removed: 0
+[2025-07-29 15:17:42] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 15:17:42] INFO - Remaining rows: 4678
+[2025-07-29 15:17:42] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.40 seconds.
+[2025-07-29 15:18:11] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:18:11] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < 5) — kept
+[2025-07-29 15:18:12] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 15:18:12] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 15:18:12] INFO - Total rows: 4898
+[2025-07-29 15:18:12] INFO - Z-score outliers: 220
+[2025-07-29 15:18:12] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < 5), removed: 0
+[2025-07-29 15:18:12] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 15:18:12] INFO - Remaining rows: 4678
+[2025-07-29 15:18:12] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.33 seconds.
+[2025-07-29 15:18:57] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:18:57] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < 5) — kept
+[2025-07-29 15:18:57] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 15:18:57] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 15:18:57] INFO - Total rows: 4898
+[2025-07-29 15:18:57] INFO - Z-score outliers: 220
+[2025-07-29 15:18:57] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < 5), removed: 0
+[2025-07-29 15:18:57] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 15:18:57] INFO - Remaining rows: 4678
+[2025-07-29 15:18:57] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.29 seconds.
+[2025-07-29 15:19:30] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:19:30] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < 5) — kept
+[2025-07-29 15:19:31] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 15:19:31] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 15:19:31] INFO - Total rows: 4898
+[2025-07-29 15:19:31] INFO - Z-score outliers: 220
+[2025-07-29 15:19:31] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < 5), removed: 0
+[2025-07-29 15:19:31] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 15:19:31] INFO - Remaining rows: 4678
+[2025-07-29 15:19:31] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.40 seconds.
+[2025-07-29 15:21:08] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:21:08] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < 5) — kept
+[2025-07-29 15:21:08] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 15:21:08] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 15:21:08] INFO - Total rows: 4898
+[2025-07-29 15:21:08] INFO - Z-score outliers: 220
+[2025-07-29 15:21:08] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < 5), removed: 0
+[2025-07-29 15:21:08] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 15:21:08] INFO - Remaining rows: 4678
+[2025-07-29 15:21:08] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.29 seconds.
+[2025-07-29 15:21:22] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-29 15:21:22] INFO log(UV)=0 present but no spike: 223 vs. neighbors avg 210 (ratio = 1.06 < 5) — kept
+[2025-07-29 15:21:22] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_l.pdf
+[2025-07-29 15:21:22] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/l):
+[2025-07-29 15:21:22] INFO - Total rows: 3213
+[2025-07-29 15:21:22] INFO - Z-score outliers: 141
+[2025-07-29 15:21:22] INFO - log(UV) = 0 rows: 0 (ratio = 1.06 < 5), removed: 0
+[2025-07-29 15:21:22] INFO - Total dropped: 141 rows (4.39%)
+[2025-07-29 15:21:22] INFO - Remaining rows: 3072
+[2025-07-29 15:21:22] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/l) completed in 0.28 seconds.
+[2025-07-29 15:24:55] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-29 15:24:55] INFO log(UV)=0 present but no spike: 223 vs. neighbors avg 210 (ratio = 1.06 < threshold 5) — kept
+[2025-07-29 15:24:55] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_l.pdf
+[2025-07-29 15:24:55] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/l):
+[2025-07-29 15:24:55] INFO - Total rows: 3213
+[2025-07-29 15:24:55] INFO - Z-score outliers: 141
+[2025-07-29 15:24:55] INFO - log(UV) = 0 rows: 0 (ratio = 1.06 < threshold 5), removed: 0
+[2025-07-29 15:24:55] INFO - Total dropped: 141 rows (4.39%)
+[2025-07-29 15:24:55] INFO - Remaining rows: 3072
+[2025-07-29 15:24:55] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/l) completed in 0.38 seconds.
+[2025-07-29 15:31:02] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:31:02] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_kg.pdf
+[2025-07-29 15:31:02] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.20 seconds.
+[2025-07-29 15:31:02] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-29 15:31:02] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_l.pdf
+[2025-07-29 15:31:02] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/l) completed in 0.18 seconds.
+[2025-07-29 15:31:21] INFO 🚀 Modality test (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:31:28] INFO 📈 Modality test summary:
+[2025-07-29 15:31:28] INFO - Column tested: ln_uv
+[2025-07-29 15:31:28] INFO - Original sample size: 4678
+[2025-07-29 15:31:28] INFO ✅ Full sample used.
+[2025-07-29 15:31:28] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-29 15:31:28] INFO ✅ Modality test (HS 220300, 2010, M, USD/kg) completed in 6.59 seconds.
+[2025-07-29 15:32:38] INFO 🚀 Modality test (HS 220300, 2010, M, USD/l)
+[2025-07-29 15:32:44] INFO 📈 Modality test summary:
+[2025-07-29 15:32:44] INFO - Column tested: ln_uv_q
+[2025-07-29 15:32:44] INFO - Original sample size: 3072
+[2025-07-29 15:32:44] INFO ✅ Full sample used.
+[2025-07-29 15:32:44] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-29 15:32:44] INFO ✅ Modality test (HS 220300, 2010, M, USD/l) completed in 5.55 seconds.
+[2025-07-29 15:48:12] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/kg)
+[2025-07-29 15:48:12] INFO Fitted Norm Distribution
+[2025-07-29 15:48:12] INFO norm_loc: 0.2385
+[2025-07-29 15:48:12] INFO norm_scale: 0.7779
+[2025-07-29 15:48:12] INFO norm_loglik: -5463.0073
+[2025-07-29 15:48:12] INFO norm_mean: 0.2385
+[2025-07-29 15:48:12] INFO norm_median: 0.2385
+[2025-07-29 15:48:12] INFO norm_mode: 0.2385
+[2025-07-29 15:48:12] INFO norm_variance: 0.6052
+[2025-07-29 15:48:12] INFO norm_sample_variance: 0.6053
+[2025-07-29 15:48:12] INFO norm_skew: 0.0000
+[2025-07-29 15:48:12] INFO norm_kurtosis: 0.0000
+[2025-07-29 15:48:12] INFO norm_aic: 10930.0146
+[2025-07-29 15:48:12] INFO norm_bic: 10942.9159
+[2025-07-29 15:48:12] INFO Fitted Skewnorm Distribution
+[2025-07-29 15:48:12] INFO skewnorm_a: 2.0748
+[2025-07-29 15:48:12] INFO skewnorm_loc: -0.5555
+[2025-07-29 15:48:12] INFO skewnorm_scale: 1.1116
+[2025-07-29 15:48:12] INFO skewnorm_loglik: -5341.4143
+[2025-07-29 15:48:12] INFO skewnorm_mean: 0.2434
+[2025-07-29 15:48:12] INFO skewnorm_median: 0.1758
+[2025-07-29 15:48:12] INFO skewnorm_mode: 0.0305
+[2025-07-29 15:48:12] INFO skewnorm_variance: 0.5973
+[2025-07-29 15:48:12] INFO skewnorm_sample_variance: 0.6053
+[2025-07-29 15:48:12] INFO skewnorm_skew: 0.4742
+[2025-07-29 15:48:12] INFO skewnorm_kurtosis: 0.3235
+[2025-07-29 15:48:12] INFO skewnorm_aic: 10688.8287
+[2025-07-29 15:48:12] INFO skewnorm_bic: 10708.1806
+[2025-07-29 15:48:12] INFO Fitted T Distribution
+[2025-07-29 15:48:12] INFO t_df: 7.2238
+[2025-07-29 15:48:12] INFO t_loc: 0.1942
+[2025-07-29 15:48:12] INFO t_scale: 0.6677
+[2025-07-29 15:48:12] INFO t_loglik: -5416.1700
+[2025-07-29 15:48:12] INFO t_mean: 0.1942
+[2025-07-29 15:48:12] INFO t_median: 0.1942
+[2025-07-29 15:48:12] INFO t_mode: 0.1942
+[2025-07-29 15:48:12] INFO t_variance: 0.6165
+[2025-07-29 15:48:12] INFO t_sample_variance: 0.6053
+[2025-07-29 15:48:12] INFO t_skew: 0.0000
+[2025-07-29 15:48:12] INFO t_kurtosis: 1.8612
+[2025-07-29 15:48:12] INFO t_aic: 10838.3400
+[2025-07-29 15:48:12] INFO t_bic: 10857.6919
+[2025-07-29 15:48:12] INFO Fitted Gennorm Distribution
+[2025-07-29 15:48:12] INFO gennorm_beta: 1.4526
+[2025-07-29 15:48:12] INFO gennorm_loc: 0.1936
+[2025-07-29 15:48:12] INFO gennorm_scale: 0.8808
+[2025-07-29 15:48:12] INFO gennorm_loglik: -5410.0713
+[2025-07-29 15:48:12] INFO gennorm_mean: 0.1936
+[2025-07-29 15:48:12] INFO gennorm_median: 0.1936
+[2025-07-29 15:48:12] INFO gennorm_mode: 0.1936
+[2025-07-29 15:48:12] INFO gennorm_variance: 0.6065
+[2025-07-29 15:48:12] INFO gennorm_sample_variance: 0.6053
+[2025-07-29 15:48:12] INFO gennorm_skew: 0.0000
+[2025-07-29 15:48:12] INFO gennorm_kurtosis: 0.8766
+[2025-07-29 15:48:12] INFO gennorm_aic: 10826.1425
+[2025-07-29 15:48:12] INFO gennorm_bic: 10845.4944
+[2025-07-29 15:48:12] INFO Fitted Johnsonsu Distribution
+[2025-07-29 15:48:12] INFO johnsonsu_a: -1.0761
+[2025-07-29 15:48:12] INFO johnsonsu_b: 2.1598
+[2025-07-29 15:48:12] INFO johnsonsu_loc: -0.5315
+[2025-07-29 15:48:12] INFO johnsonsu_scale: 1.3339
+[2025-07-29 15:48:12] INFO johnsonsu_loglik: -5320.5633
+[2025-07-29 15:48:12] INFO johnsonsu_mean: 0.2393
+[2025-07-29 15:48:12] INFO johnsonsu_median: 0.1609
+[2025-07-29 15:48:12] INFO johnsonsu_mode: 0.0369
+[2025-07-29 15:48:12] INFO johnsonsu_variance: 0.6183
+[2025-07-29 15:48:12] INFO johnsonsu_sample_variance: 0.6053
+[2025-07-29 15:48:12] INFO johnsonsu_skew: 0.7807
+[2025-07-29 15:48:12] INFO johnsonsu_kurtosis: 2.0659
+[2025-07-29 15:48:12] INFO johnsonsu_aic: 10649.1265
+[2025-07-29 15:48:12] INFO johnsonsu_bic: 10674.9290
+[2025-07-29 15:48:12] INFO Fitted Logistic Distribution
+[2025-07-29 15:48:12] INFO logistic_loc: 0.1935
+[2025-07-29 15:48:12] INFO logistic_scale: 0.4294
+[2025-07-29 15:48:12] INFO logistic_loglik: -5410.2241
+[2025-07-29 15:48:12] INFO logistic_mean: 0.1935
+[2025-07-29 15:48:12] INFO logistic_median: 0.1935
+[2025-07-29 15:48:12] INFO logistic_mode: 0.1935
+[2025-07-29 15:48:12] INFO logistic_variance: 0.6067
+[2025-07-29 15:48:12] INFO logistic_sample_variance: 0.6053
+[2025-07-29 15:48:12] INFO logistic_skew: 0.0000
+[2025-07-29 15:48:12] INFO logistic_kurtosis: 1.2000
+[2025-07-29 15:48:12] INFO logistic_aic: 10824.4482
+[2025-07-29 15:48:12] INFO logistic_bic: 10837.3495
+[2025-07-29 15:48:12] INFO Best fit based on AIC/BIC: Johnsonsu
+[2025-07-29 15:48:12] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/kg) completed in 0.21 seconds.
+[2025-07-29 16:21:57] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/kg)
+[2025-07-29 16:21:57] INFO Best fit based on AIC/BIC: Johnsonsu
+[2025-07-29 16:21:57] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/kg) completed in 0.15 seconds.
+[2025-07-29 16:22:14] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/kg)
+[2025-07-29 16:22:53] INFO 95% CI for Mean: 0.216 – 0.260 (log), 1.241 – 1.297 USD/kg
+[2025-07-29 16:22:53] INFO 95% CI for Median: 0.139 – 0.181 (log), 1.149 – 1.198 USD/kg
+[2025-07-29 16:22:53] INFO 95% CI for Mode: 0.008 – 0.066 (log), 1.008 – 1.068 USD/kg
+[2025-07-29 16:22:53] INFO 95% CI for Variance: 0.588 – 0.648
+[2025-07-29 16:22:53] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/kg) completed in 38.62 seconds.
+[2025-07-29 16:35:36] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/kg)
+[2025-07-29 16:35:36] INFO Best fit based on AIC/BIC: Johnsonsu
+[2025-07-29 16:35:36] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/kg) completed in 0.16 seconds.
+[2025-07-29 16:36:46] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/kg)
+[2025-07-29 16:36:46] INFO Best fit based on AIC/BIC: Johnsonsu
+[2025-07-29 16:36:46] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/kg) completed in 0.15 seconds.
+[2025-07-29 16:43:59] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/kg)
+[2025-07-29 16:44:40] INFO 95% CI for Mean: 0.218 – 0.261 (log), 1.243 – 1.298 USD/kg
+[2025-07-29 16:44:40] INFO 95% CI for Median: 0.140 – 0.182 (log), 1.151 – 1.200 USD/kg
+[2025-07-29 16:44:40] INFO 95% CI for Mode: 0.010 – 0.065 (log), 1.010 – 1.068 USD/kg
+[2025-07-29 16:44:40] INFO 95% CI for Variance: 0.588 – 0.648
+[2025-07-29 16:44:40] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/kg) completed in 41.07 seconds.
+[2025-07-29 16:49:01] INFO 🚀 Unimodal fit plotting (HS 220300, 2010, M, USD/kg)
+[2025-07-29 16:49:01] INFO ✅ Unimodal fit plotting (HS 220300, 2010, M, USD/kg) completed in 0.31 seconds.
+[2025-07-29 16:49:08] INFO 🚀 GMM component number selecting (HS 220300, 2010, M, USD/kg)
+[2025-07-29 16:49:12] INFO ✅ GMM component number selecting (HS 220300, 2010, M, USD/kg) completed in 3.8405251502990723 seconds.
+[2025-07-29 17:01:50] INFO 🚀 GMM component number selecting (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:01:52] INFO ✅ GMM component number selecting (HS 220300, 2010, M, USD/kg) completed in 1.6726014614105225 seconds.
+[2025-07-29 17:13:01] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:13:41] INFO 95% CI for Mean: 0.218 – 0.260 (log), 1.244 – 1.297 USD/kg
+[2025-07-29 17:13:41] INFO 95% CI for Median: 0.139 – 0.182 (log), 1.149 – 1.200 USD/kg
+[2025-07-29 17:13:41] INFO 95% CI for Mode: 0.008 – 0.066 (log), 1.008 – 1.068 USD/kg
+[2025-07-29 17:13:41] INFO 95% CI for Variance: 0.587 – 0.649
+[2025-07-29 17:13:41] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/kg) completed in 39.18 seconds.
+[2025-07-29 17:15:40] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:16:19] INFO 95% CI for Mean: 0.218 – 0.264 (log), 1.243 – 1.302 USD/kg
+[2025-07-29 17:16:19] INFO 95% CI for Median: 0.138 – 0.185 (log), 1.148 – 1.203 USD/kg
+[2025-07-29 17:16:19] INFO 95% CI for Mode: 0.008 – 0.066 (log), 1.008 – 1.069 USD/kg
+[2025-07-29 17:16:19] INFO 95% CI for Variance: 0.590 – 0.650
+[2025-07-29 17:16:19] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/kg) completed in 38.91 seconds.
+[2025-07-29 17:23:23] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:23:23] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < threshold 5) — kept
+[2025-07-29 17:23:23] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 17:23:23] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 17:23:23] INFO - Total rows: 4898
+[2025-07-29 17:23:23] INFO - Z-score outliers: 220
+[2025-07-29 17:23:23] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < threshold 5), removed: 0
+[2025-07-29 17:23:23] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 17:23:23] INFO - Remaining rows: 4678
+[2025-07-29 17:23:23] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.29 seconds.
+[2025-07-29 17:26:46] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:26:46] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < threshold 5) — kept
+[2025-07-29 17:26:47] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 17:26:47] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 17:26:47] INFO - Total rows: 4898
+[2025-07-29 17:26:47] INFO - Z-score outliers: 220
+[2025-07-29 17:26:47] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < threshold 5), removed: 0
+[2025-07-29 17:26:47] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 17:26:47] INFO - Remaining rows: 4678
+[2025-07-29 17:26:47] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.31 seconds.
+[2025-07-29 17:31:21] INFO 🚀 Modality test (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:31:28] INFO 📈 Modality test summary:
+[2025-07-29 17:31:28] INFO - Column tested: ln_uv
+[2025-07-29 17:31:28] INFO - Original sample size: 4678
+[2025-07-29 17:31:28] INFO ✅ Full sample used.
+[2025-07-29 17:31:28] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-29 17:31:28] INFO ✅ Modality test (HS 220300, 2010, M, USD/kg) completed in 7.00 seconds.
+[2025-07-29 17:43:56] INFO 🚀 Clean trade data (HS 220300, 2010, M)
+[2025-07-29 17:43:56] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_220300_2010.csv
+[2025-07-29 17:43:56] INFO 📈 Cleaning Summary:
+[2025-07-29 17:43:56] INFO  - Initial rows: 37720
+[2025-07-29 17:43:56] INFO  - Valid country filter: 33223 (88.08%)
+[2025-07-29 17:43:56] INFO  - Valid trade value filter: 6340 (16.81%)
+[2025-07-29 17:43:56] INFO  - Valid kg-based UV rows: 4898 (12.99%)
+[2025-07-29 17:43:56] INFO 🧪 Non-kg UV Subset:
+[2025-07-29 17:43:56] INFO  - Top unit: Volume in liters (l)
+[2025-07-29 17:43:56] INFO  - Share of valid top non-kg UV rows: 54.00% (Required: 10%)
+[2025-07-29 17:43:56] INFO  - Valid top non-kg UV count: 3213
+[2025-07-29 17:43:56] INFO ✅ Non-kg UV subset created.
+[2025-07-29 17:43:56] INFO ✅ Trade data cleaning completed in 0.14 seconds.
+[2025-07-29 17:47:28] INFO 🚀 Clean trade data (HS 220300, 2010, M)
+[2025-07-29 17:47:28] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_220300_2010.csv
+[2025-07-29 17:47:28] INFO 📈 Cleaning Summary:
+[2025-07-29 17:47:28] INFO  - Initial rows: 37720
+[2025-07-29 17:47:28] INFO  - Valid country filter: 33223 (88.08%)
+[2025-07-29 17:47:28] INFO  - Valid trade value filter: 6340 (16.81%)
+[2025-07-29 17:47:28] INFO  - Valid kg-based UV rows: 4898 (12.99%)
+[2025-07-29 17:47:28] INFO 🧪 Non-kg UV Subset:
+[2025-07-29 17:47:28] INFO  - Top unit: Volume in liters (l)
+[2025-07-29 17:47:28] INFO  - Share of valid top non-kg UV rows: 54.00% (Required: 10%)
+[2025-07-29 17:47:28] INFO  - Valid top non-kg UV count: 3213
+[2025-07-29 17:47:28] INFO ✅ Non-kg UV subset created.
+[2025-07-29 17:47:28] INFO ✅ Trade data cleaning completed in 0.14 seconds.
+[2025-07-29 17:48:05] INFO 🚀 Clean trade data (HS 220300, 2010, M)
+[2025-07-29 17:48:05] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_220300_2010.csv
+[2025-07-29 17:48:05] INFO 📈 Cleaning Summary:
+[2025-07-29 17:48:05] INFO  - Initial rows: 37720
+[2025-07-29 17:48:05] INFO  - Valid country filter: 33223 (88.08%)
+[2025-07-29 17:48:05] INFO  - Valid trade value filter: 6340 (16.81%)
+[2025-07-29 17:48:05] INFO  - Valid kg-based UV rows: 4898 (12.99%)
+[2025-07-29 17:48:05] INFO 🧪 Non-kg UV Subset:
+[2025-07-29 17:48:05] INFO  - Top unit: Volume in liters (l)
+[2025-07-29 17:48:05] INFO  - Share of valid top non-kg UV rows: 54.00% (Required: 10%)
+[2025-07-29 17:48:05] INFO  - Valid top non-kg UV count: 3213
+[2025-07-29 17:48:05] INFO ✅ Non-kg UV subset created.
+[2025-07-29 17:48:05] INFO ✅ Trade data cleaning completed in 0.15 seconds.
+[2025-07-29 17:53:35] INFO 🚀 Clean trade data (HS 220300, 2010, M)
+[2025-07-29 17:53:35] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_220300_2010.csv
+[2025-07-29 17:53:35] INFO 📈 Cleaning Summary:
+[2025-07-29 17:53:35] INFO  - Initial rows: 37720
+[2025-07-29 17:53:35] INFO  - Valid country filter: 33223 (88.08%)
+[2025-07-29 17:53:35] INFO  - Valid trade value filter: 6340 (16.81%)
+[2025-07-29 17:53:35] INFO  - Valid kg-based UV rows: 4898 (12.99%)
+[2025-07-29 17:53:35] INFO 🧪 Non-kg UV Subset:
+[2025-07-29 17:53:35] INFO  - Top unit: Volume in liters (l)
+[2025-07-29 17:53:35] INFO  - Share of valid top non-kg UV rows: 54.00% (Required: 10%)
+[2025-07-29 17:53:35] INFO  - Valid top non-kg UV count: 3213
+[2025-07-29 17:53:35] INFO ✅ Non-kg UV subset created.
+[2025-07-29 17:53:35] INFO ✅ Trade data cleaning completed in 0.14 seconds.
+[2025-07-29 17:53:54] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:53:54] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < threshold 5) — kept
+[2025-07-29 17:53:55] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-29 17:53:55] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-29 17:53:55] INFO - Total rows: 4898
+[2025-07-29 17:53:55] INFO - Z-score outliers: 220
+[2025-07-29 17:53:55] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < threshold 5), removed: 0
+[2025-07-29 17:53:55] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-29 17:53:55] INFO - Remaining rows: 4678
+[2025-07-29 17:53:55] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.38 seconds.
+[2025-07-29 17:54:00] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-29 17:54:00] INFO log(UV)=0 present but no spike: 223 vs. neighbors avg 210 (ratio = 1.06 < threshold 5) — kept
+[2025-07-29 17:54:00] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_l.pdf
+[2025-07-29 17:54:00] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/l):
+[2025-07-29 17:54:00] INFO - Total rows: 3213
+[2025-07-29 17:54:00] INFO - Z-score outliers: 141
+[2025-07-29 17:54:00] INFO - log(UV) = 0 rows: 0 (ratio = 1.06 < threshold 5), removed: 0
+[2025-07-29 17:54:00] INFO - Total dropped: 141 rows (4.39%)
+[2025-07-29 17:54:00] INFO - Remaining rows: 3072
+[2025-07-29 17:54:00] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/l) completed in 0.31 seconds.
+[2025-07-29 17:54:40] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:54:40] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_kg.pdf
+[2025-07-29 17:54:40] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.20 seconds.
+[2025-07-29 17:55:12] INFO 🚀 Modality test (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:55:18] INFO 📈 Modality test summary:
+[2025-07-29 17:55:18] INFO - Column tested: ln_uv
+[2025-07-29 17:55:18] INFO - Original sample size: 4678
+[2025-07-29 17:55:18] INFO ✅ Full sample used.
+[2025-07-29 17:55:18] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-29 17:55:18] INFO ✅ Modality test (HS 220300, 2010, M, USD/kg) completed in 6.21 seconds.
+[2025-07-29 17:56:15] INFO 🚀 Modality test (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:56:21] INFO 📈 Modality test summary:
+[2025-07-29 17:56:21] INFO - Column tested: ln_uv
+[2025-07-29 17:56:21] INFO - Original sample size: 4678
+[2025-07-29 17:56:21] INFO ✅ Full sample used.
+[2025-07-29 17:56:21] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-29 17:56:21] INFO ✅ Modality test (HS 220300, 2010, M, USD/kg) completed in 6.07 seconds.
+[2025-07-29 17:56:30] INFO 🚀 Modality test (HS 220300, 2010, M, USD/l)
+[2025-07-29 17:56:36] INFO 📈 Modality test summary:
+[2025-07-29 17:56:36] INFO - Column tested: ln_uv_q
+[2025-07-29 17:56:36] INFO - Original sample size: 3072
+[2025-07-29 17:56:36] INFO ✅ Full sample used.
+[2025-07-29 17:56:36] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-29 17:56:36] INFO ✅ Modality test (HS 220300, 2010, M, USD/l) completed in 5.40 seconds.
+[2025-07-29 17:56:50] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:56:50] INFO Best fit based on AIC/BIC: Johnsonsu
+[2025-07-29 17:56:50] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/kg) completed in 0.15 seconds.
+[2025-07-29 17:56:56] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/kg)
+[2025-07-29 17:57:35] INFO 95% CI for Mean: 0.218 – 0.261 (log), 1.243 – 1.298 USD/kg
+[2025-07-29 17:57:35] INFO 95% CI for Median: 0.140 – 0.183 (log), 1.151 – 1.201 USD/kg
+[2025-07-29 17:57:35] INFO 95% CI for Mode: 0.010 – 0.066 (log), 1.010 – 1.068 USD/kg
+[2025-07-29 17:57:35] INFO 95% CI for Variance: 0.588 – 0.650
+[2025-07-29 17:57:35] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/kg) completed in 38.86 seconds.
+[2025-07-29 18:07:17] INFO 🚀 GMM component number selection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 18:07:18] INFO 📈 GMM selection summary: BIC-best=2, L-adjust=None, Tick-adjust=None, Selected=2
+[2025-07-29 18:07:18] INFO ✅ GMM component number selection (HS 220300, 2010, M, USD/kg) completed in 1.6201245784759521 seconds.
+[2025-07-29 18:09:20] INFO 🚀 GMM component number selection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 18:09:21] INFO 📈 GMM selection summary: BIC-best=2, L-adjust=None, Tick-adjust=None, Selected=2
+[2025-07-29 18:09:21] INFO ✅ GMM component number selection (HS 220300, 2010, M, USD/kg) completed in 1.62 seconds.
+[2025-07-29 18:09:40] INFO 🚀 GMM fit (HS 220300, 2010, M, USD/kg)
+[2025-07-29 18:09:40] INFO ✅ GMM fit (HS 220300, 2010, M, USD/kg) completed in 0.46 seconds.
+[2025-07-29 18:10:14] INFO 🚀 GMM component number selection (HS 220300, 2010, M, USD/kg)
+[2025-07-29 18:10:15] INFO 📈 GMM selection summary: BIC-best=2, L-adjust=None, Tick-adjust=None, Selected=2
+[2025-07-29 18:10:15] INFO ✅ GMM component number selection (HS 220300, 2010, M, USD/kg) completed in 1.60 seconds.

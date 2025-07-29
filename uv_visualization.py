@@ -4,11 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import matplotlib as mpl
-from uv_config import load_config
 from scipy.stats import norm, skewnorm, t, gennorm, johnsonsu, logistic
-config = load_config()
 
-def plot_histogram(data, code, year, flow, logger, unit_label="USD/kg", save_path=None, ax=None, file_format="png"):
+def plot_histogram(data, code, year, flow, config, logger, unit_label="USD/kg", save_path=None, ax=None, file_format="png"):
     """
     Plot a histogram with customizable options and Freedman-Diaconis rule for bin width.
     
@@ -77,6 +75,7 @@ def plot_dist(
     code,
     year,
     flow,
+    config,
     logger, 
     unit_label="USD/kg",
     dist=None,

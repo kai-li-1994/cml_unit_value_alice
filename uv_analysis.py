@@ -1,27 +1,17 @@
 import time
 import numpy as np
 import pandas as pd
-from scipy.stats import (
-    norm,
-    skewnorm,
-    logistic,
-    t,
-    johnsonsu,
-    gennorm,
-)
+from scipy.stats import (norm, skewnorm, logistic, t, johnsonsu, gennorm)
 from scipy.optimize import minimize_scalar
 from matplotlib import colormaps
 import matplotlib.pyplot as plt
 import subprocess
 from io import StringIO
-from uv_config import load_config
 import os
 from sklearn.mixture import GaussianMixture
 from matplotlib.lines import Line2D
-config = load_config()
 
-
-def modality_test(df, code, year, flow, logger, unit_label,  
+def modality_test(df, code, year, flow, config, logger, unit_label,  
                   r_script_path="uv_modality_test.R", mod0=1, 
                   col="ln_uv", methods=["SI", "HH"], cap_size=50000):
     """
@@ -129,6 +119,7 @@ def modality_test(df, code, year, flow, logger, unit_label,
 
         report_modality = {
             "t_method": "SI+HH",
+            "t_cap_size": cap_size,
             "t_modality_decision": final_decision,
             "t_modality_votes": int(n_reject),
             "t_sample_capped": was_capped,
@@ -170,12 +161,15 @@ def modality_test(df, code, year, flow, logger, unit_label,
         logger.info(f"✅ Modality test (HS {code}, {year}, {flow.upper()}, "
                     f"{unit_label}) completed in {elapsed:.2f} seconds.")
         return {
-            "t_name": "modality_test",
+            "t_method": "SI+HH",
+            "t_cap_size": cap_size,
             "t_modality_error": str(e),
             "t_modality_decision": "error",
+            "t_modality_votes": int(n_reject),
             "t_sample_capped": was_capped,
             "t_sample_used": len(sampled),
-            "t_sample_original": original_n
+            "t_sample_original": original_n,
+            "t_borderline": is_borderline
         }, "error", False
     
 def _estimate_mode(dist, args, data):
@@ -238,6 +232,9 @@ def _fit_distribution(dist_obj, data, logger=None):
         f"{dist_name}_aic": aic,
         f"{dist_name}_bic": bic,
     }
+    
+    result = {k: round(float(v), 3) if isinstance(v, np.floating) else v 
+              for k, v in result.items()}
 
     if logger:
         logger.info(f"Fitted {dist_name.capitalize()} Distribution")
@@ -257,8 +254,10 @@ def fit_all_unimodal_models(data, code, year, flow, logger, unit_label="USD/kg")
     Returns:
         tuple: (best_fit_name, report_best_fit_uni, report_all_uni_fit, raw_params_dict)
     """
-    logger.info(f"🚀 Fitting unimodal distribution (HS {code}, {year}, {flow.upper()}, {unit_label})")
+    logger.info(f"🚀 Fitting unimodal distribution (HS {code}, {year}, "
+                f"{flow.upper()}, {unit_label})")
     start_time = time.time()
+    
     model_objs = [norm, skewnorm, t, gennorm, johnsonsu, logistic]
 
     report_all_uni_fit = {}
@@ -266,7 +265,7 @@ def fit_all_unimodal_models(data, code, year, flow, logger, unit_label="USD/kg")
     scores = {}
 
     for dist_obj in model_objs:
-        dist_name, result, params = _fit_distribution(dist_obj, data, logger=logger)
+        dist_name, result, params = _fit_distribution(dist_obj, data, logger=None)
         report_all_uni_fit.update(result)
         raw_params_dict[f"{dist_name}_params"] = params
         scores[dist_name] = (result[f"{dist_name}_aic"], result[f"{dist_name}_bic"])
@@ -379,14 +378,16 @@ def bootstrap_parametric_ci(
                 f"{unit_label}) completed in {elapsed:.2f} seconds.")
     
     return {
-    "ci_mean_lower": ci_mean[0],
-    "ci_mean_upper": ci_mean[1],
-    "ci_median_lower": ci_median[0],
-    "ci_median_upper": ci_median[1],
-    "ci_mode_lower": ci_mode[0],
-    "ci_mode_upper": ci_mode[1],
-    "ci_variance_lower": ci_var[0],
-    "ci_variance_upper": ci_var[1]
+    "ci_ci": confidence,
+    "ci_n_boot": n_bootstraps,
+    "ci_mean_lower": round(float(ci_mean[0]), 3),
+    "ci_mean_upper": round(float(ci_mean[1]), 3),
+    "ci_median_lower": round(float(ci_median[0]), 3),
+    "ci_median_upper": round(float(ci_median[1]), 3),
+    "ci_mode_lower": round(float(ci_mode[0]), 3),
+    "ci_mode_upper": round(float(ci_mode[1]), 3),
+    "ci_variance_lower": round(float(ci_var[0]), 3),
+    "ci_variance_upper": round(float(ci_var[1]), 3),
 }
 
 def find_gmm_components(
@@ -394,6 +395,7 @@ def find_gmm_components(
     code,
     year,
     flow,
+    config,
     logger,
     unit_label="USD/kg",
     max_components=50,
@@ -465,7 +467,7 @@ def find_gmm_components(
         report : dict
             Diagnostic info and selection metadata.
     """
-    logger.info(f"🚀 GMM component number selecting (HS {code}, {year}, {flow.upper()}, {unit_label})")
+    logger.info(f"🚀 GMM component number selection (HS {code}, {year}, {flow.upper()}, {unit_label})")
     start_time = time.time()
     
     # Convert to numpy array if it's a DataFrame
@@ -539,21 +541,24 @@ def find_gmm_components(
 
     optimal_k = min(candidates)
 
-    print(f"📈 GMM selection: BIC-best={best_k}, L-adjust={l_adj}, Tick-adjust={tick_adj}, Selected={optimal_k}")
+    logger.info(f"📈 GMM selection summary: BIC-best={best_k},"
+         f" L-adjust={l_adj}, Tick-adjust={tick_adj}, Selected={optimal_k}")
 
     if plot:
         if ax is None:
             fig, ax = plt.subplots(figsize=(10, 6))
         x_vals = np.arange(1, 1 + len(bic_values))
         ax.plot(x_vals, bic_values, marker='o', label="BIC")
-        ax.axvline(best_k, linestyle="--", color="red", label=f"Best BIC: {best_k}")
+        ax.axvline(best_k, linestyle="--", color="red", 
+                   label=f"Best BIC: {best_k}")
         for k in notes:
             ax.axvline(k, linestyle=":", label=f"{notes[k]}: {k}")
         ax.set_xticks(x_vals)
         ax.set_xlabel("Number of components")
         ax.set_ylabel("BIC")
         text_d = 'imports' if flow == 'm' else 'exports'
-        ax.set_title(f"GMM component selection based on BIC for unit values ({unit_label}) of HS {code} {text_d} in {year}")
+        ax.set_title(f"GMM component selection based on BIC for unit values "
+                     f"({unit_label}) of HS {code} {text_d} in {year}")
         dummy_sample = Line2D([], [], linestyle="none")
         handles, labels = ax.get_legend_handles_labels()
         handles.insert(0, dummy_sample)
@@ -564,7 +569,8 @@ def find_gmm_components(
         if save_path:
             plt.tight_layout()
             unit_suffix = unit_label.split("/")[-1]
-            save_path = os.path.join(config["dirs"]["figures"], f"cs_{code}_{year}_{flow}_{unit_suffix}.png")
+            save_path = os.path.join(config["dirs"]["figures"], 
+                            f"cs_{code}_{year}_{flow}_{unit_suffix}.png")
             plt.savefig(save_path, dpi=300)
             if ax is None:
                 plt.close()
@@ -576,8 +582,8 @@ def find_gmm_components(
         "cs_n_samples": n_samples,
         "cs_optimal_components": optimal_k,
         "cs_bic_best_components": best_k,
-        "cs_bic_at_optimal_components": round(bic_values[optimal_k - 1], 4),
-        "cs_bic_at_best_components": round(bic_values[best_k - 1], 4),
+        "cs_bic_at_optimal_components": round(float(bic_values[optimal_k - 1]), 3),
+        "cs_bic_at_best_components": round(float(bic_values[best_k - 1]), 3),
         "cs_l_shape_adjustment": l_adj,
         "cs_tick_shape_adjustment": tick_adj,
         "cs_converged_early": stable_counter >= convergence_threshold,
@@ -587,8 +593,8 @@ def find_gmm_components(
     }
     
     elapsed = time.time() - start_time
-    logger.info(f"✅ GMM component number selecting (HS {code}, {year}, "
-            f"{flow.upper()}, {unit_label}) completed in {elapsed} seconds.")
+    logger.info(f"✅ GMM component number selection (HS {code}, {year}, "
+            f"{flow.upper()}, {unit_label}) completed in {elapsed:.2f} seconds.")
 
     return optimal_k, bic_values.tolist(), report_gmm_cselect
 
@@ -599,6 +605,7 @@ def fit_gmm(
     code,
     year,
     flow,
+    config,
     logger,
     unit_label="USD/kg",
     plot=True,
@@ -795,8 +802,6 @@ def fit_gmm(
                
     elapsed = time.time() - start_time
     logger.info(f"✅ GMM fit (HS {code}, {year}, "
-            f"{flow.upper()}, {unit_label}) completed in {elapsed} seconds.")
+            f"{flow.upper()}, {unit_label}) completed in {elapsed:.2f} seconds.")
     
     return gmm_1d_report
-
-
