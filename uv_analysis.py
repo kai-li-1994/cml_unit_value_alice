@@ -572,6 +572,8 @@ def find_gmm_components(
             save_path = os.path.join(config["dirs"]["figures"], 
                             f"cs_{code}_{year}_{flow}_{unit_suffix}.png")
             plt.savefig(save_path, dpi=300)
+            logger.info(f"📁 Saved plot to {save_path}")
+            
             if ax is None:
                 plt.close()
         else:

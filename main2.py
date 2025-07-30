@@ -9,9 +9,11 @@ Funding Acknowledgment:
   UN Comtrade database 
 29/07/2025
 """
+import pandas as pd
 import time
+import os
 from uv_logger import logger_setup
-from uv_config import load_config, prefix_dict_keys, save_report_dict
+from uv_config import load_config 
 from uv_preparation import clean_trade, detect_outliers
 from uv_analysis import (
     modality_test,
@@ -64,6 +66,12 @@ def cmltrade_uv(code, year, flow):
        
         if non_kg_unit != 'USD/kg':
             report_q_outlier = prefix_dict_keys(report_q_outlier, prefix="q_")
+            
+            skip_keys = {"hs_code", "year", "flow"}
+            r_prefixed = {(f"q_{k}" if k not in skip_keys else k): v 
+                          for k, v in r.items()}                               # new dict with 'q_' prefix
+            report_final.update(r_prefixed)
+            
 
         report_final = {}
         report_final.update(report_clean)
@@ -110,24 +118,24 @@ def cmltrade_uv(code, year, flow):
         if modality_decision == "unimodal" or is_borderline:
             
             # === Fitting Unimodal distribution of kg-based UV ====
-            (best_fit_name, report_best_fit_uni, report_all_uni_fit, 
-             raw_params_dict) = fit_all_unimodal_models(df_filtered["ln_uv"], 
-                    code, year, flow, logger, unit_label="USD/kg")
+            best_fit, report_best_fit, report_all_fit, raw_params =\
+            fit_all_unimodal_models(df_filtered["ln_uv"], 
+                                code, year, flow, logger, unit_label="USD/kg")
             
             # === Bootstrapping CI (kg-based) ==== 
             report_ci_uni = bootstrap_parametric_ci(
-                df_filtered["ln_uv"], code, year, flow, config, logger, 
-                unit_label="USD/kg", dist=best_fit_name, n_bootstraps=1000)
+                df_filtered["ln_uv"], code, year, flow, logger, 
+                unit_label="USD/kg", dist=best_fit, n_bootstraps=1000)
 
             # === Plotting unimodal distribution fit of kg-based UV ====
             plot_dist(
-                df_filtered["ln_uv"],code,year,flow, logger, 
+                df_filtered["ln_uv"],code,year,flow, config, logger, 
                 unit_label="USD/kg",
                 dist=None,
-                best_fit_name=best_fit_name,
-                report_best_fit_uni=report_best_fit_uni,
-                report_all_uni_fit=report_all_uni_fit,
-                raw_params_dict=raw_params_dict,
+                best_fit_name=best_fit,
+                report_best_fit_uni=report_best_fit,
+                report_all_uni_fit=report_all_fit,
+                raw_params_dict=raw_params,
                 ci=report_ci_uni,
                 save_path=True,
                 ax=None,
@@ -159,46 +167,33 @@ def cmltrade_uv(code, year, flow):
             )
             
             report_gmm_1d = fit_gmm(
-                df_filtered,
-                ["ln_uv"],
-                optimal_k,
-                code, year, flow, logger, 
-                unit_label="USD/kg",
-                plot=True,
-                save_path=True,
-                n_init=10,
-                reg_covar=1e-3,
-            )
+                df_filtered, ["ln_uv"], optimal_k, code, year, flow, config, 
+                logger, 
+                unit_label="USD/kg", plot=True, save_path=True, n_init=10,
+                reg_covar=1e-3)
     # %%% Non-kg-based UV
     if non_kg_unit != 'USD/kg'  and df_q is not None and not df_q.empty:
         if modality_q_decision == "unimodal" or is_q_borderline:
             
             # === Fitting Unimodal distribution of non-kg-based UV ====
-            (best_fit_name_q,
-                report_q_best_fit_uni,
-                report_q_all_uni_fit,
-                raw_params_dict_q,
-            ) = fit_all_unimodal_models(df_q_filtered["ln_uv_q"], code, year, 
+            (best_fit_q, report_q_best_fit, report_q_all_fit, raw_params_q) = \
+            fit_all_unimodal_models(df_q_filtered["ln_uv_q"], code, year, 
                                         flow, logger, unit_label=non_kg_unit)
             
             # === Bootstrapping CI (non-kg-based) ====    
             report_q_ci_uni = bootstrap_parametric_ci(
                 df_q_filtered["ln_uv_q"], code, year, flow, logger, 
-                unit_label=non_kg_unit, dist=best_fit_name_q, n_bootstraps=1000)
+                unit_label=non_kg_unit, dist=best_fit_q, n_bootstraps=1000)
             
             # === Plotting unimodal distribution fit of non-kg-based UV ====
             plot_dist(
-                df_q_filtered["ln_uv_q"],
-                code,
-                year,
-                flow,
-                logger,
+                df_q_filtered["ln_uv_q"], code, year, flow, config, logger, 
                 unit_label=non_kg_unit,
                 dist=None,
-                best_fit_name=best_fit_name_q,
-                report_best_fit_uni=report_q_best_fit_uni,
-                report_all_uni_fit=report_q_all_uni_fit,
-                raw_params_dict=raw_params_dict_q,
+                best_fit_name=best_fit_q,
+                report_best_fit_uni=report_q_best_fit,
+                report_all_uni_fit=report_q_all_fit,
+                raw_params_dict=raw_params_q,
                 ci=report_q_ci_uni,
                 save_path=True,
                 ax=None,
@@ -206,19 +201,14 @@ def cmltrade_uv(code, year, flow):
                 
             if is_q_borderline:
                 # === Also fitting GMM on non-kg-based UV if borderline ===
-                optimal_k_q, bic_values_q, report_q_gmmf_1d = find_gmm_components(
-                    df_q_filtered[["ln_uv_q"]], code, year, flow, logger, 
-                    unit_label=non_kg_unit, plot=True, save_path=True
-                )
+                optimal_k_q, bic_values_q, report_q_gmmf_1d = \
+                find_gmm_components(df_q_filtered[["ln_uv_q"]], code, year, 
+                flow, config, logger,
+                unit_label=non_kg_unit, plot=True, save_path=True)
                
                 report_q_gmm_1d = fit_gmm(
-                    df_q_filtered,
-                    ["ln_uv_q"],
-                    optimal_k_q,
-                    code,
-                    year,
-                    flow,
-                    logger, 
+                    df_q_filtered, ["ln_uv_q"], optimal_k_q, code, year, flow,
+                    config, logger, 
                     unit_label=non_kg_unit,
                     plot=True,
                     save_path=True,
@@ -227,25 +217,18 @@ def cmltrade_uv(code, year, flow):
 
         else: 
             optimal_k_q, bic_values_q, report_q_gmmf_1d = find_gmm_components(
-                df_q_filtered[["ln_uv_q"]], code, year, flow, logger, 
+                df_q_filtered[["ln_uv_q"]], code, year, flow, config, logger, 
                 unit_labe=non_kg_unit, plot=True, save_path=True)
             
             report_q_gmm_1d = fit_gmm(
-                df_q_filtered,
-                ["ln_uv_q"],
-                optimal_k_q,
-                code,
-                year,
-                flow,
-                logger,
+                df_q_filtered, ["ln_uv_q"], optimal_k_q, code, year, flow,
+                config, logger,
                 unit_label=non_kg_unit,
                 plot=True,
                 save_path=True,
                 n_init=10,
-                reg_covar=1e-3)
-            
+                reg_covar=1e-3)        
     # %% Step 6: Return final report
-    
     report_final = {}
     # Reports to merge (non-kg ones will be prefixed)
     report_keys_kg = [
@@ -253,29 +236,31 @@ def cmltrade_uv(code, year, flow):
         "report_all_uni_fit", "report_ci_uni", "report_gmmf_1d", "report_gmm_1d"
     ]
 
-    report_keys_q = [
-        "report_q_clean", "report_q_outlier", "report_q_modality", 
-        "report_q_all_uni_fit", "report_q_ci_uni", "report_q_gmmf_1d", "report_q_gmm_1d"
-    ]
+    report_keys_q = [k.replace("report_", "report_q_") for k in report_keys_kg]
 
-    # Merge kg-based reports directly
     for name in report_keys_kg:
-        r = locals().get(name)
+        r = locals().get(name)                                                 # Looks up the variable named e.g. "report_q_gmm_1d"
         if isinstance(r, dict):
-            report_final.update(r)
+            report_final.update(r)                                             # Merge kg-based reports directly
 
     # Merge q-based reports with prefix
     for name in report_keys_q:
         r = locals().get(name)
         if isinstance(r, dict):
-            r_prefixed = prefix_dict_keys(r, prefix="q_")
+            skip_keys = {"hs_code", "year", "flow"}
+            r_prefixed = {(f"q_{k}" if k not in skip_keys else k): v 
+                          for k, v in r.items()}                               # new dict with 'q_' prefix
             report_final.update(r_prefixed)
-            
-    save_report_dict(report_final, code, year, flow, config, logger)
+      
+    df = pd.Series({k: str(v) for k, v in report_final.items()}
+                   ).to_frame("value")                                         # Convert all values to strings for safe saving
+    report_path = os.path.join(config["dirs"]["reports"], 
+                               f"report_{code}_{year}_{flow}.parquet")         # Save a flat dictionary as a .parquet file in the reports folder
+    df.to_parquet(report_path)
+    logger.info(f"✅ Saved final report to {report_path}")
     
     elapsed = time.time() - zero_time
-    print(f"🟢 cmltrade_uv completed in {elapsed} seconds.")
-          
+    print(f"🟢 cmltrade_uv completed in {elapsed:.2f} seconds.")
     return report_final
 # %% 
 if __name__ == "__main__":

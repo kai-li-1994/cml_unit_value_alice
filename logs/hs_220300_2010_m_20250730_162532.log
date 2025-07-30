@@ -1,0 +1,122 @@
+[2025-07-30 16:25:36] INFO 🚀 Clean trade data (HS 220300, 2010, M)
+[2025-07-30 16:25:36] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_220300_2010.csv
+[2025-07-30 16:25:36] INFO 📈 Cleaning Summary:
+[2025-07-30 16:25:36] INFO  - Initial rows: 37720
+[2025-07-30 16:25:36] INFO  - Valid country filter: 33223 (88.08%)
+[2025-07-30 16:25:36] INFO  - Valid trade value filter: 6340 (16.81%)
+[2025-07-30 16:25:36] INFO  - Valid kg-based UV rows: 4898 (12.99%)
+[2025-07-30 16:25:36] INFO 🧪 Non-kg UV Subset:
+[2025-07-30 16:25:36] INFO  - Top unit: Volume in liters (l)
+[2025-07-30 16:25:36] INFO  - Share of valid top non-kg UV rows: 54.00% (Required: 10%)
+[2025-07-30 16:25:36] INFO  - Valid top non-kg UV count: 3213
+[2025-07-30 16:25:36] INFO ✅ Non-kg UV subset created.
+[2025-07-30 16:25:36] INFO ✅ Trade data cleaning completed in 0.14 seconds.
+[2025-07-30 16:25:54] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:25:54] INFO log(UV)=0 present but no spike: 401 vs. neighbors avg 282 (ratio = 1.42 < threshold 5) — kept
+[2025-07-30 16:25:54] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_kg.pdf
+[2025-07-30 16:25:54] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/kg):
+[2025-07-30 16:25:54] INFO - Total rows: 4898
+[2025-07-30 16:25:54] INFO - Z-score outliers: 220
+[2025-07-30 16:25:54] INFO - log(UV) = 0 rows: 65 (ratio = 1.42 < threshold 5), removed: 0
+[2025-07-30 16:25:54] INFO - Total dropped: 220 rows (4.49%)
+[2025-07-30 16:25:54] INFO - Remaining rows: 4678
+[2025-07-30 16:25:54] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.48 seconds.
+[2025-07-30 16:25:54] INFO 🚀 Outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-30 16:25:54] INFO log(UV)=0 present but no spike: 223 vs. neighbors avg 210 (ratio = 1.06 < threshold 5) — kept
+[2025-07-30 16:25:54] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_od_220300_2010_m_l.pdf
+[2025-07-30 16:25:54] INFO 📈 Outlier detection summary (HS 220300, 2010, M, USD/l):
+[2025-07-30 16:25:54] INFO - Total rows: 3213
+[2025-07-30 16:25:54] INFO - Z-score outliers: 141
+[2025-07-30 16:25:54] INFO - log(UV) = 0 rows: 0 (ratio = 1.06 < threshold 5), removed: 0
+[2025-07-30 16:25:54] INFO - Total dropped: 141 rows (4.39%)
+[2025-07-30 16:25:54] INFO - Remaining rows: 3072
+[2025-07-30 16:25:54] INFO ✅ Outlier detection (HS 220300, 2010, M, USD/l) completed in 0.25 seconds.
+[2025-07-30 16:26:01] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:26:01] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_kg.pdf
+[2025-07-30 16:26:01] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/kg) completed in 0.26 seconds.
+[2025-07-30 16:26:01] INFO 🚀 Histogram plotting after outlier detection (HS 220300, 2010, M, USD/l)
+[2025-07-30 16:26:01] INFO 📁 Saved histogram to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\hist_220300_2010_m_l.pdf
+[2025-07-30 16:26:01] INFO ✅ Histogram plotting after outlier detection (HS 220300, 2010, M, USD/l) completed in 0.18 seconds.
+[2025-07-30 16:26:09] INFO 🚀 Modality test (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:26:15] INFO 📈 Modality test summary:
+[2025-07-30 16:26:15] INFO - Column tested: ln_uv
+[2025-07-30 16:26:15] INFO - Original sample size: 4678
+[2025-07-30 16:26:15] INFO ✅ Full sample used.
+[2025-07-30 16:26:15] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-30 16:26:15] INFO ✅ Modality test (HS 220300, 2010, M, USD/kg) completed in 6.42 seconds.
+[2025-07-30 16:26:15] INFO 🚀 Modality test (HS 220300, 2010, M, USD/l)
+[2025-07-30 16:26:21] INFO 📈 Modality test summary:
+[2025-07-30 16:26:21] INFO - Column tested: ln_uv_q
+[2025-07-30 16:26:21] INFO - Original sample size: 3072
+[2025-07-30 16:26:21] INFO ✅ Full sample used.
+[2025-07-30 16:26:21] INFO - Final decision: unimodal (0 reject out of 2)
+[2025-07-30 16:26:21] INFO ✅ Modality test (HS 220300, 2010, M, USD/l) completed in 5.48 seconds.
+[2025-07-30 16:41:34] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:41:34] INFO Best fit based on AIC/BIC: Johnsonsu
+[2025-07-30 16:41:34] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/kg) completed in 0.16 seconds.
+[2025-07-30 16:47:51] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:48:32] INFO 95% CI for Mean: 0.217 – 0.264 (log), 1.242 – 1.302 USD/kg
+[2025-07-30 16:48:32] INFO 95% CI for Median: 0.139 – 0.185 (log), 1.149 – 1.203 USD/kg
+[2025-07-30 16:48:32] INFO 95% CI for Mode: 0.004 – 0.066 (log), 1.004 – 1.068 USD/kg
+[2025-07-30 16:48:32] INFO 95% CI for Variance: 0.587 – 0.648
+[2025-07-30 16:48:32] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/kg) completed in 40.27 seconds.
+[2025-07-30 16:54:25] INFO 🚀 Unimodal fit plotting (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:54:26] INFO ✅ Unimodal fit plotting (HS 220300, 2010, M, USD/kg) completed in 0.37 seconds.
+[2025-07-30 16:54:37] INFO 🚀 GMM component number selection (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:54:40] INFO 📈 GMM selection summary: BIC-best=2, L-adjust=None, Tick-adjust=None, Selected=2
+[2025-07-30 16:54:40] INFO ✅ GMM component number selection (HS 220300, 2010, M, USD/kg) completed in 3.53 seconds.
+[2025-07-30 16:56:24] INFO 🚀 GMM component number selection (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:56:25] INFO 📈 GMM selection summary: BIC-best=2, L-adjust=None, Tick-adjust=None, Selected=2
+[2025-07-30 16:56:25] INFO 📁 Saved plot to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\cs_220300_2010_m_kg.png
+[2025-07-30 16:56:25] INFO ✅ GMM component number selection (HS 220300, 2010, M, USD/kg) completed in 1.65 seconds.
+[2025-07-30 16:56:56] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:56:56] INFO Best fit based on AIC/BIC: Johnsonsu
+[2025-07-30 16:56:56] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/kg) completed in 0.16 seconds.
+[2025-07-30 16:57:08] INFO 🚀 Unimodal fit plotting (HS 220300, 2010, M, USD/kg)
+[2025-07-30 16:57:08] INFO ✅ Unimodal fit plotting (HS 220300, 2010, M, USD/kg) completed in 0.30 seconds.
+[2025-07-30 17:21:02] INFO 🚀 Unimodal fit plotting (HS 220300, 2010, M, USD/kg)
+[2025-07-30 17:21:02] INFO 📁 Saved plot to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\fit_220300_2010_m_kg_johnsonsu.pdf
+[2025-07-30 17:21:02] INFO ✅ Unimodal fit plotting (HS 220300, 2010, M, USD/kg) completed in 0.31 seconds.
+[2025-07-30 17:21:17] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/kg)
+[2025-07-30 17:21:56] INFO 95% CI for Mean: 0.218 – 0.262 (log), 1.244 – 1.300 USD/kg
+[2025-07-30 17:21:56] INFO 95% CI for Median: 0.140 – 0.184 (log), 1.151 – 1.202 USD/kg
+[2025-07-30 17:21:56] INFO 95% CI for Mode: 0.009 – 0.067 (log), 1.009 – 1.069 USD/kg
+[2025-07-30 17:21:56] INFO 95% CI for Variance: 0.589 – 0.652
+[2025-07-30 17:21:56] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/kg) completed in 38.85 seconds.
+[2025-07-30 17:23:21] INFO 🚀 GMM component number selection (HS 220300, 2010, M, USD/kg)
+[2025-07-30 17:23:22] INFO 📈 GMM selection summary: BIC-best=2, L-adjust=None, Tick-adjust=None, Selected=2
+[2025-07-30 17:23:23] INFO 📁 Saved plot to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\cs_220300_2010_m_kg.png
+[2025-07-30 17:23:23] INFO ✅ GMM component number selection (HS 220300, 2010, M, USD/kg) completed in 1.63 seconds.
+[2025-07-30 17:24:10] INFO 🚀 GMM fit (HS 220300, 2010, M, USD/kg)
+[2025-07-30 17:24:10] INFO ✅ GMM fit (HS 220300, 2010, M, USD/kg) completed in 0.44 seconds.
+[2025-07-30 17:31:12] INFO 🚀 GMM component number selection (HS 220300, 2010, M, USD/kg)
+[2025-07-30 17:31:13] INFO 📈 GMM selection summary: BIC-best=2, L-adjust=None, Tick-adjust=None, Selected=2
+[2025-07-30 17:31:14] INFO 📁 Saved plot to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\cs_220300_2010_m_kg.png
+[2025-07-30 17:31:14] INFO ✅ GMM component number selection (HS 220300, 2010, M, USD/kg) completed in 1.67 seconds.
+[2025-07-30 17:31:30] INFO 🚀 GMM fit (HS 220300, 2010, M, USD/kg)
+[2025-07-30 17:31:31] INFO ✅ GMM fit (HS 220300, 2010, M, USD/kg) completed in 0.45 seconds.
+[2025-07-30 17:38:53] INFO 🚀 Fitting unimodal distribution (HS 220300, 2010, M, USD/l)
+[2025-07-30 17:38:53] INFO Best fit based on AIC/BIC: Gennorm
+[2025-07-30 17:38:53] INFO ✅ Unimodal distribution fit (HS 220300, 2010, M, USD/l) completed in 0.11 seconds.
+[2025-07-30 17:39:22] INFO 🚀 Bootstrapping CI (HS 220300, 2010, M, USD/l)
+[2025-07-30 17:39:31] INFO 95% CI for Mean: 0.154 – 0.197 (log), 1.166 – 1.218 USD/kg
+[2025-07-30 17:39:31] INFO 95% CI for Median: 0.154 – 0.197 (log), 1.166 – 1.218 USD/kg
+[2025-07-30 17:39:31] INFO 95% CI for Mode: 0.154 – 0.197 (log), 1.166 – 1.218 USD/kg
+[2025-07-30 17:39:31] INFO 95% CI for Variance: 0.423 – 0.474
+[2025-07-30 17:39:31] INFO ✅ CI bootstrapping (HS 220300, 2010, M, USD/l) completed in 8.79 seconds.
+[2025-07-30 17:40:24] INFO 🚀 Unimodal fit plotting (HS 220300, 2010, M, USD/l)
+[2025-07-30 17:40:24] INFO 📁 Saved plot to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\fit_220300_2010_m_l_gennorm.pdf
+[2025-07-30 17:40:24] INFO ✅ Unimodal fit plotting (HS 220300, 2010, M, USD/l) completed in 0.29 seconds.
+[2025-07-30 17:41:17] INFO 🚀 GMM component number selection (HS 220300, 2010, M, USD/l)
+[2025-07-30 17:41:18] INFO 📈 GMM selection summary: BIC-best=2, L-adjust=None, Tick-adjust=None, Selected=2
+[2025-07-30 17:41:19] INFO 📁 Saved plot to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\figures\cs_220300_2010_m_l.png
+[2025-07-30 17:41:19] INFO ✅ GMM component number selection (HS 220300, 2010, M, USD/l) completed in 1.74 seconds.
+[2025-07-30 17:42:00] INFO 🚀 GMM fit (HS 220300, 2010, M, USD/l)
+[2025-07-30 17:42:01] INFO ✅ GMM fit (HS 220300, 2010, M, USD/l) completed in 0.67 seconds.
+[2025-07-30 17:42:36] INFO 🚀 GMM fit (HS 220300, 2010, M, USD/l)
+[2025-07-30 17:42:37] INFO ✅ GMM fit (HS 220300, 2010, M, USD/l) completed in 0.62 seconds.
+[2025-07-30 18:40:56] INFO ✅ Saved final report to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\reports\report_220300_2010_m.parquet
+[2025-07-30 18:41:38] INFO ✅ Saved final report to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\reports\report_220300_2010_m.parquet
+[2025-07-30 18:42:18] INFO ✅ Saved final report to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\reports\report_220300_2010_m.parquet
+[2025-07-30 18:42:18] INFO ✅ Saved final report to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\reports\report_220300_2010_m.parquet
+[2025-07-30 18:43:05] INFO ✅ Saved final report to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\reports\report_220300_2010_m.parquet

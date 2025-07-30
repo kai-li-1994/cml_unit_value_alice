@@ -209,6 +209,8 @@ def plot_dist(
         save_path = os.path.join(config["dirs"]["figures"], 
            f"fit_{code}_{year}_{flow}_{unit_suffix}_{best_fit_name}.{file_format}")
         plt.savefig(save_path, dpi=300)
+        logger.info(f"📁 Saved plot to {save_path}")
+        
         if ax is None:
             plt.close()
     else:

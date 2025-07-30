@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 import pickle
-from pathlib import Path
 import os
 import platform
 import shutil
 
-def detect_environment():
+def _detect_environment():
     """
     Detect the environment where the code is running.
     Supports override via environment variable 'MY_ENV'.
@@ -27,8 +26,8 @@ def detect_environment():
     else:
         return "unknown"
     
-def get_base_dir():
-    env = detect_environment()
+def _get_base_dir():
+    env = _detect_environment()
 
     if env == "alice":
         return "/zfsstore/user/lik6/cml_unit_value"
@@ -57,7 +56,7 @@ def load_config(
     ):
     """Load ISO mappings, group list, quantity unit mappings, and thresholds from pickle files."""
     
-    base_dir = get_base_dir()
+    base_dir = _get_base_dir()
     
     # === ISO country mapping ===
     df_cmap = pd.read_pickle(country_file)
@@ -136,32 +135,7 @@ def load_config(
         "q_share_threshold": 0.10,
         "min_records_q": 200,
         "min_records_uv": 200,
-        "env": detect_environment(),
+        "env": _detect_environment(),
         "dirs": dirs,
         "rscript_exec": rscript_exec,
     }
-
-def prefix_dict_keys(d, prefix, skip_keys=None):
-    """
-    Add a prefix to all keys in a dictionary, except for any in skip_keys.
-    """
-    if skip_keys is None:
-        skip_keys = {"hs_code", "year", "flow"}
-    return { (f"{prefix}{k}" if k not in skip_keys else k): v for k, v in d.items() }
-
-def save_report_dict(report_dict, code, year, flow, config, logger=None):
-    """
-    Save a flat dictionary as a .parquet file in the reports folder.
-    All values are converted to string to avoid ArrowTypeError.
-    """
-    report_path = os.path.join(
-        config["dirs"]["reports"],
-        f"report_{code}_{year}_{flow}.parquet"
-    )
-    
-    # Convert all values to strings for safe saving
-    df = pd.Series({k: str(v) for k, v in report_dict.items()}).to_frame("value")
-    df.to_parquet(report_path)
-
-    if logger:
-        logger.info(f"✅ Saved final report to {report_path}")
