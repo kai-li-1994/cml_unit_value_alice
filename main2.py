@@ -27,6 +27,7 @@ from uv_visualization import plot_histogram, plot_dist
 # subscription_key = "4a624b220f67400c9a6ef19b1890f1f9"
 # path = 'C:/Users/lik6/Data/ComtradeTariffline/merge/split_by_hs_2023_numpy'
 #code = "220300"
+#code = "490700"
 #year = "2010"
 #flow = "m"
 
@@ -60,33 +61,35 @@ def cmltrade_uv(code, year, flow):
     
     
     if not is_valid_for_fit and non_kg_unit == 'USD/kg' or \
-       not is_valid_for_fit and not is_valid_for_fit_q:
+        not is_valid_for_fit and not is_valid_for_fit_q:                        # kg unit invalid while no non_kg_unit or both exist but invalid
         logger.warning("❌ Skipping both kg-based and non-kg-based analysis "
                        "due to insufficient sample size.")
-       
-        if non_kg_unit != 'USD/kg':
-            report_q_outlier = prefix_dict_keys(report_q_outlier, prefix="q_")
-            
-            skip_keys = {"hs_code", "year", "flow"}
-            r_prefixed = {(f"q_{k}" if k not in skip_keys else k): v 
-                          for k, v in r.items()}                               # new dict with 'q_' prefix
-            report_final.update(r_prefixed)
-            
 
         report_final = {}
         report_final.update(report_clean)
         report_final.update(report_outlier)
-        report_final.update(report_q_clean)
-        if non_kg_unit != 'USD/kg':
+        
+        if non_kg_unit != 'USD/kg' and report_q_clean is not None:
+            skip_keys = {"hs_code", "year", "flow"}
+            report_q_clean = {(f"q_{k}" if k not in skip_keys else k): v 
+                          for k, v in report_q_clean.items()}
+            report_q_outlier = {(f"q_{k}" if k not in skip_keys else k): v 
+                          for k, v in report_q_outlier.items()}
+            report_final.update(report_q_clean)
             report_final.update(report_q_outlier)
         
         report_final["skip_reason"] = "Too few kg-based and non-kg-based records"
         
-        save_report_dict(report_final, code, year, flow, config, logger)
+        df = pd.Series({k: str(v) for k, v in report_final.items()}
+                       ).to_frame("value")                                         # Convert all values to strings for safe saving
+        report_path = os.path.join(config["dirs"]["reports"], 
+                                   f"report_{code}_{year}_{flow}.parquet")         # Save a flat dictionary as a .parquet file in the reports folder
+        df.to_parquet(report_path)
+        logger.info(f"✅ Saved final report to {report_path}")
         
         elapsed = time.time() - zero_time
-        print(f"🟢 cmltrade_uv completed in {elapsed} seconds.")
-        
+        print(f"🟢 cmltrade_uv completed in {elapsed:.2f} seconds.")
+
         return report_final
     # %% Step 3: Histogram 
     # === Kg-based UV ===
@@ -264,9 +267,8 @@ def cmltrade_uv(code, year, flow):
     return report_final
 # %% 
 if __name__ == "__main__":
+    
     import argparse
-    import pandas as pd
-    import os
 
     parser = argparse.ArgumentParser(description="Run UVPicker unit value analysis.\n"
         "Single run: python main.py --code 370110 --year 2023 --flow m\n"

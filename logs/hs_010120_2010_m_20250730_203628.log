@@ -1,0 +1,91 @@
+[2025-07-30 20:36:31] INFO 🚀 Clean trade data (HS 010120, 2010, M)
+[2025-07-30 20:36:31] ERROR No matching file found for code 010120 in path C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy
+[2025-07-30 20:37:10] INFO 🚀 Clean trade data (HS 010130, 2010, M)
+[2025-07-30 20:37:10] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_010130_2010.csv
+[2025-07-30 20:37:10] INFO 📈 Cleaning Summary:
+[2025-07-30 20:37:10] INFO  - Initial rows: 5
+[2025-07-30 20:37:10] INFO  - Valid country filter: 5 (100.00%)
+[2025-07-30 20:37:10] INFO  - Valid trade value filter: 0 (0.00%)
+[2025-07-30 20:37:10] INFO  - Valid kg-based UV rows: 0 (0.00%)
+[2025-07-30 20:37:10] WARNING ⚠️ No non-kg units found in qty rows.
+[2025-07-30 20:37:10] INFO ✅ Trade data cleaning completed in 0.04 seconds.
+[2025-07-30 20:37:34] INFO 🚀 Outlier detection (HS 010130, 2010, M, USD/kg)
+[2025-07-30 20:37:34] WARNING ⚠️ No valid UV records available for 010130-2010-m — skipping outlier detection.
+[2025-07-30 20:37:34] INFO ✅ Outlier detection (HS 010130, 2010, M, USD/kg) completed in 0.00 seconds.
+[2025-07-30 20:37:59] WARNING ❌ Skipping both kg-based and non-kg-based analysis due to insufficient sample size.
+[2025-07-30 20:39:31] INFO ✅ Saved final report to C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value_alice\reports\report_010130_2010_m.parquet
+[2025-07-30 20:40:57] INFO 🚀 Clean trade data (HS 380891, 2010, M)
+[2025-07-30 20:40:57] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_380891_2010.csv
+[2025-07-30 20:40:57] INFO 📈 Cleaning Summary:
+[2025-07-30 20:40:57] INFO  - Initial rows: 23890
+[2025-07-30 20:40:57] INFO  - Valid country filter: 21882 (91.59%)
+[2025-07-30 20:40:57] INFO  - Valid trade value filter: 5844 (24.46%)
+[2025-07-30 20:40:57] INFO  - Valid kg-based UV rows: 5352 (22.40%)
+[2025-07-30 20:40:57] WARNING ⚠️ No non-kg units found in qty rows.
+[2025-07-30 20:40:57] INFO ✅ Trade data cleaning completed in 0.09 seconds.
+[2025-07-30 20:42:39] INFO 🚀 Clean trade data (HS 340111, 2010, M)
+[2025-07-30 20:42:39] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_340111_2010.csv
+[2025-07-30 20:42:39] INFO 📈 Cleaning Summary:
+[2025-07-30 20:42:39] INFO  - Initial rows: 30588
+[2025-07-30 20:42:39] INFO  - Valid country filter: 27458 (89.77%)
+[2025-07-30 20:42:39] INFO  - Valid trade value filter: 7235 (23.65%)
+[2025-07-30 20:42:39] INFO  - Valid kg-based UV rows: 6447 (21.08%)
+[2025-07-30 20:42:39] WARNING ⚠️ No non-kg units found in qty rows.
+[2025-07-30 20:42:39] INFO ✅ Trade data cleaning completed in 0.10 seconds.
+[2025-07-30 20:42:50] INFO 🚀 Clean trade data (HS 340220, 2010, M)
+[2025-07-30 20:42:50] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_340220_2010.csv
+[2025-07-30 20:42:50] INFO 📈 Cleaning Summary:
+[2025-07-30 20:42:50] INFO  - Initial rows: 44743
+[2025-07-30 20:42:50] INFO  - Valid country filter: 40669 (90.89%)
+[2025-07-30 20:42:50] INFO  - Valid trade value filter: 9735 (21.76%)
+[2025-07-30 20:42:50] INFO  - Valid kg-based UV rows: 8950 (20.00%)
+[2025-07-30 20:42:50] INFO 🧪 Non-kg UV Subset:
+[2025-07-30 20:42:50] INFO  - Top unit: Volume in liters (l)
+[2025-07-30 20:42:50] INFO  - Share of valid top non-kg UV rows: 3.59% (Required: 10%)
+[2025-07-30 20:42:50] INFO  - Valid top non-kg UV count: 329
+[2025-07-30 20:42:50] WARNING ❌ No non-kg UV subset created: share 3.59% < 10%
+[2025-07-30 20:42:50] INFO ✅ Trade data cleaning completed in 0.14 seconds.
+[2025-07-30 20:43:02] INFO 🚀 Clean trade data (HS 300490, 2010, M)
+[2025-07-30 20:43:02] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_300490_2010.csv
+[2025-07-30 20:43:02] INFO 📈 Cleaning Summary:
+[2025-07-30 20:43:02] INFO  - Initial rows: 100876
+[2025-07-30 20:43:02] INFO  - Valid country filter: 94652 (93.83%)
+[2025-07-30 20:43:02] INFO  - Valid trade value filter: 28818 (28.57%)
+[2025-07-30 20:43:02] INFO  - Valid kg-based UV rows: 25413 (25.19%)
+[2025-07-30 20:43:02] WARNING ⚠️ No non-kg units found in qty rows.
+[2025-07-30 20:43:02] INFO ✅ Trade data cleaning completed in 0.27 seconds.
+[2025-07-30 20:44:42] INFO 🚀 Clean trade data (HS 360500, 2010, M)
+[2025-07-30 20:44:42] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_360500_2010.csv
+[2025-07-30 20:44:42] INFO 📈 Cleaning Summary:
+[2025-07-30 20:44:42] INFO  - Initial rows: 4992
+[2025-07-30 20:44:42] INFO  - Valid country filter: 4412 (88.38%)
+[2025-07-30 20:44:42] INFO  - Valid trade value filter: 1306 (26.16%)
+[2025-07-30 20:44:42] INFO  - Valid kg-based UV rows: 1091 (21.85%)
+[2025-07-30 20:44:42] INFO 🧪 Non-kg UV Subset:
+[2025-07-30 20:44:42] INFO  - Top unit: Thousand of items (1000u)
+[2025-07-30 20:44:42] INFO  - Share of valid top non-kg UV rows: 1.27% (Required: 10%)
+[2025-07-30 20:44:42] INFO  - Valid top non-kg UV count: 14
+[2025-07-30 20:44:42] WARNING ❌ No non-kg UV subset created: share 1.27% < 10%
+[2025-07-30 20:44:42] INFO ✅ Trade data cleaning completed in 0.04 seconds.
+[2025-07-30 20:44:57] INFO 🚀 Clean trade data (HS 360500, 2010, M)
+[2025-07-30 20:44:57] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_360500_2010.csv
+[2025-07-30 20:44:57] INFO 📈 Cleaning Summary:
+[2025-07-30 20:44:57] INFO  - Initial rows: 4992
+[2025-07-30 20:44:58] INFO  - Valid country filter: 4412 (88.38%)
+[2025-07-30 20:44:58] INFO  - Valid trade value filter: 1306 (26.16%)
+[2025-07-30 20:44:58] INFO  - Valid kg-based UV rows: 1091 (21.85%)
+[2025-07-30 20:44:58] INFO 🧪 Non-kg UV Subset:
+[2025-07-30 20:44:58] INFO  - Top unit: Thousand of items (1000u)
+[2025-07-30 20:44:58] INFO  - Share of valid top non-kg UV rows: 1.27% (Required: 10%)
+[2025-07-30 20:44:58] INFO  - Valid top non-kg UV count: 14
+[2025-07-30 20:44:58] WARNING ❌ No non-kg UV subset created: share 1.27% < 10%
+[2025-07-30 20:44:58] INFO ✅ Trade data cleaning completed in 0.04 seconds.
+[2025-07-30 20:45:09] INFO 🚀 Clean trade data (HS 490700, 2010, M)
+[2025-07-30 20:45:09] INFO 📁 Found file: C:/Users/laptop-kl/OneDrive - Universiteit Leiden/PlasticTradeFlow/tradeflow/cml_trade/cml_unit_value/data_uncomtrade\split_by_hs_2010_numpy\H4_490700_2010.csv
+[2025-07-30 20:45:09] INFO 📈 Cleaning Summary:
+[2025-07-30 20:45:09] INFO  - Initial rows: 10477
+[2025-07-30 20:45:09] INFO  - Valid country filter: 8743 (83.45%)
+[2025-07-30 20:45:09] INFO  - Valid trade value filter: 1998 (19.07%)
+[2025-07-30 20:45:09] INFO  - Valid kg-based UV rows: 1521 (14.52%)
+[2025-07-30 20:45:09] WARNING ⚠️ No non-kg units found in qty rows.
+[2025-07-30 20:45:09] INFO ✅ Trade data cleaning completed in 0.05 seconds.
